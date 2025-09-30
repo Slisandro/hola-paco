@@ -2,11 +2,16 @@ import { Image } from "expo-image";
 import React from "react";
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const { height } = Dimensions.get("window");
-
 const ServiceInfo = () => {
+    const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
+
+    React.useEffect(() => {
+        const { height } = Dimensions.get("window");
+        setWindowHeight(height);
+    }, []);
+
     return (
-        <View style={styles.section}>
+        <View style={[styles.section, { height: windowHeight }]}>
             <Image
                 source={require("@/assets/images/service-info.png")}
                 style={styles.image}
@@ -53,7 +58,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         gap: 40,
         padding: 20,
-        height: height,
     },
     image: {
         width: 300,

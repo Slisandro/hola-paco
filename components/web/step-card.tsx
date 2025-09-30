@@ -20,8 +20,16 @@ const steps = [
 ];
 
 const StepCards = () => {
+    const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
+
+    React.useEffect(() => {
+        const { height } = Dimensions.get("window");
+        setWindowHeight(height);
+    }, []);
+
     return (
-        <View style={styles.container}>
+        // @ts-expect-error
+        <View style={[styles.container, { height: windowHeight ? windowHeight * .75 : "75vh" }]}>
             <Text style={styles.heading}>DISFRUTA DE HOLA PACO</Text>
             <View style={styles.cardsContainer}>
                 {steps.map((step) => (
@@ -45,7 +53,6 @@ const styles = StyleSheet.create({
         paddingVertical: 40,
         alignItems: "center",
         backgroundColor: "#fff",
-        height: height * .75
     },
     heading: {
         fontWeight: "700",

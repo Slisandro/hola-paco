@@ -29,8 +29,15 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+    const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
+
+    React.useEffect(() => {
+        const { height } = Dimensions.get("window");
+        setWindowHeight(height);
+    }, []);
+
     return (
-        <View style={styles.section}>
+        <View style={[styles.section, { height: windowHeight }]}>
             <View style={{ gap: 10, alignItems: "center" }}>
                 <Text style={styles.subtitle}>COMENTARIOS DE LOS CLIENTES</Text>
                 <Text style={styles.title}>QUÉ OPINAN NUESTROS CLIENTES</Text>
@@ -56,9 +63,8 @@ const styles = StyleSheet.create({
     section: {
         paddingVertical: 40,
         alignItems: "center",
-        justifyContent: "center", 
+        justifyContent: "center",
         backgroundColor: "#fff",
-        height: height,
         gap: 40
     },
     subtitle: {

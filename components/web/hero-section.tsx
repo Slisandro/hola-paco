@@ -2,8 +2,6 @@ import { ImageBackground } from "expo-image";
 import React, { useState } from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-const { height } = Dimensions.get("window");
-
 const categories = [
     { id: 1, name: "Fontanería", path: require("@/assets/icons/services/fontaneria.png") },
     { id: 2, name: "Limpieza", path: require("@/assets/icons/services/limpieza.png") },
@@ -15,6 +13,12 @@ const categories = [
 
 const HeroSection = () => {
     const [selected, setSelected] = useState(1);
+    const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
+
+    React.useEffect(() => {
+        const { height } = Dimensions.get("window");
+        setWindowHeight(height);
+    }, []);
 
     return (
         <View style={{ flex: 1 }}>
@@ -24,7 +28,8 @@ const HeroSection = () => {
                 contentFit="cover"
             />
 
-            <View style={styles.container}>
+            {/* @ts-ignore */}
+            <View style={[styles.container, { minHeight: windowHeight ? windowHeight - 70 : "100vh" }]}>
                 <Text style={styles.title}>
                     Encuentra y contrata de inmediato {"\n"} un servicio de limpieza confiable.
                 </Text>
@@ -81,7 +86,6 @@ const styles = StyleSheet.create({
         paddingVertical: 24,
         gap: 30,
         justifyContent: "center",
-        minHeight: height - 70,
         marginTop: 70,
         backgroundColor: "#50B4E8CC",
     },
