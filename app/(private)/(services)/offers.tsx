@@ -18,28 +18,31 @@ const COLORS = {
 const DATA = [
     {
         id: "1",
-        name: "Juan Pérez",
-        rating: 4.5,
-        reviews: 120,
-        description: "Especialista en plomería y reparaciones de hogar.",
+        title: "Reparación de grifos",
+        description: "Se necesita reparar varios grifos que gotean en un apartamento.",
+        location: "Madrid",
+        price: "80 €",
+        paymentMethods: ["cash", "card"],
         image: "https://i.pravatar.cc/40?img=1",
     },
     {
         id: "2",
-        name: "María López",
-        rating: 5,
-        reviews: 98,
-        description: "Diseñadora de interiores con experiencia en espacios modernos.",
+        title: "Diseño de interiores",
+        description: "Diseñar y decorar sala y comedor de apartamento moderno.",
+        location: "Barcelona",
+        price: "200 €",
+        paymentMethods: ["card"],
         image: "https://i.pravatar.cc/40?img=2",
     },
     {
         id: "3",
-        name: "Juan Pérez",
-        rating: 4.5,
-        reviews: 120,
-        description: "Especialista en plomería y reparaciones de hogar.",
-        image: "https://i.pravatar.cc/40?img=1",
-    }
+        title: "Instalación eléctrica",
+        description: "Instalación de luces y enchufes en nueva oficina.",
+        location: "Valencia",
+        price: "150 €",
+        paymentMethods: ["cash"],
+        image: "https://i.pravatar.cc/40?img=3",
+    },
 ];
 
 const TABS = ["Mejores coincidencias", "Más recientes", "Favoritos"];
@@ -125,34 +128,26 @@ const Offers = () => {
 const ListItem = ({ item }: { item: any }) => {
     return (
         <View style={styles.card}>
-            {/* Primera fila: Imagen + Nombre + Estrellas */}
             <View style={styles.topRow}>
                 <Image source={{ uri: item.image }} style={styles.avatar} />
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.name}>{item.name}</Text>
+                    <Text style={styles.name}>{item.title}</Text>
+                    <View style={styles.locationWrapper}>
+                        <EvilIcons name="location" size={16} color={COLORS.gray} />
+                        <Text style={styles.locationText}>{item.location}</Text>
+                    </View>
 
-                    <View style={styles.ratingRow}>
-                        {Array.from({ length: 5 }).map((_, index) => (
-                            <Ionicons
-                                key={index}
-                                name={index < Math.floor(item.rating) ? "star" : "star-outline"}
-                                size={12}
-                                color={COLORS.accent}
-                            />
-                        ))}
-                        <Text style={styles.ratingText}>
-                            ({item.reviews})
-                        </Text>
+                    <View style={styles.paymentsRow}>
+                        {item.paymentMethods.includes("cash") && <Image source={require("@/assets/icons/profile/cash.png")} style={styles.paymentIcon} />}
+                        {item.paymentMethods.includes("card") && <Image source={require("@/assets/icons/profile/credit-card.png")} style={styles.paymentIcon} />}
                     </View>
                 </View>
             </View>
 
-            {/* Descripción */}
             <Text style={styles.description}>{item.description}</Text>
-
-            {/* Botón de chat */}
+            <Text style={styles.price}>{item.price}</Text>
             <Pressable style={styles.chatButton}>
-                <Text style={styles.chatButtonText}>Chat</Text>
+                <Text style={styles.chatButtonText}>Contactar</Text>
             </Pressable>
         </View>
     );
@@ -306,6 +301,9 @@ const styles = StyleSheet.create({
         textAlign: "center",
         textAlignVertical: "center",
     },
+    paymentsRow: { flexDirection: "row", alignItems: "center", marginTop: 6, gap: 8 },
+    paymentIcon: { width: 20, height: 20, resizeMode: "contain" },
+    price: { fontFamily: "DM Sans", fontWeight: "700", fontSize: 14, color: COLORS.text, marginTop: 4 },
 });
 
 export default Offers;

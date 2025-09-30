@@ -23,6 +23,7 @@ const DATA = [
         reviews: 120,
         description: "Especialista en plomería y reparaciones de hogar.",
         image: "https://i.pravatar.cc/40?img=1",
+        payments: ["cash", "card"],
     },
     {
         id: "2",
@@ -31,6 +32,7 @@ const DATA = [
         reviews: 98,
         description: "Diseñadora de interiores con experiencia en espacios modernos.",
         image: "https://i.pravatar.cc/40?img=2",
+        payments: ["card"],
     },
     {
         id: "3",
@@ -39,6 +41,7 @@ const DATA = [
         reviews: 120,
         description: "Especialista en plomería y reparaciones de hogar.",
         image: "https://i.pravatar.cc/40?img=1",
+        payments: ["cash"],
     }
 ];
 
@@ -163,11 +166,21 @@ const ListItem = ({ item }: { item: any }) => {
                         </Text>
                     </View>
                 </View>
-
+                
                 <View style={{ alignItems: "flex-end" }}>
                     <Text style={styles.price}>80 €</Text>
                     <Text style={styles.labelPrice}>Precio final sin impuestos</Text>
                 </View>
+
+            </View>
+
+            <View style={styles.paymentsRow}>
+                {item.payments.includes("cash") && (
+                    <Image source={require("@/assets/icons/profile/cash.png")} style={styles.paymentIcon} />
+                )}
+                {item.payments.includes("card") && (
+                    <Image source={require("@/assets/icons/profile/credit-card.png")} style={styles.paymentIcon} />
+                )}
             </View>
 
             {/* Descripción */}
@@ -353,6 +366,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         textAlignVertical: "center",
     },
+    paymentsRow: { flexDirection: "row", alignItems: "center", marginTop: 6, gap: 12, marginHorizontal: 6 },
+    paymentIcon: { width: 20, height: 20, resizeMode: "contain" },
 });
 
 export default Proffesional;

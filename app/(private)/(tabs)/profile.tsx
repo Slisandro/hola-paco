@@ -18,19 +18,6 @@ const ITEMS_PROFILE = [
     },
 ];
 
-const ITEMS_ACCOUNT = [
-    {
-        name: "Conviértete en trabajador",
-        icon: require("@/assets/icons/profile/construction-worker.png"),
-        route: "/(private)/(profile)/profileWorker"
-    },
-    {
-        name: "Registrar una empresa",
-        icon: require("@/assets/icons/profile/bricks.png"),
-        route: "/(private)/(profile)/registerCompany"
-    },
-];
-
 const ITEMS_ACTIONS = [
     {
         name: "Compartir",
@@ -53,14 +40,29 @@ export default function ProfileScreen() {
     const router = useRouter();
     const { accountType } = useAccount();
 
-    // Filtrar ITEMS_ACCOUNT según accountType
-    const filteredAccountItems = ITEMS_ACCOUNT.filter(item => {
-        // Si es profesional, no mostramos "Conviértete en trabajador"
-        if (accountType === "profesional" && item.name === "Conviértete en trabajador") {
-            return false;
-        }
-        return true;
-    });
+    const ITEMS_ACCOUNT = [
+        {
+            name: accountType === "profesional"
+                ? "Historial de clientes"
+                : "Historial de profesionales contratados",
+            icon: require("@/assets/icons/profile/history.png"),
+            route: "/(profile)/history"
+        },
+        accountType === "profesional" ? {
+            name: "Métodos de pagos",
+            icon: require("@/assets/icons/profile/wallet.png"),
+            route: "/(private)/(profile)/paymentMethod"
+        } : {
+            name: "Conviértete en trabajador",
+            icon: require("@/assets/icons/profile/construction-worker.png"),
+            route: "/(private)/(profile)/profileWorker"
+        },
+        {
+            name: "Registrar una empresa",
+            icon: require("@/assets/icons/profile/bricks.png"),
+            route: "/(private)/(profile)/registerCompany"
+        },
+    ];
 
     const renderSection = (items: { name: string, icon: any, route: any }[]) =>
         items.map((item, index) => (
@@ -85,7 +87,7 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.container}>
                 <View style={styles.section}>{renderSection(ITEMS_PROFILE)}</View>
-                <View style={styles.section}>{renderSection(filteredAccountItems)}</View>
+                <View style={styles.section}>{renderSection(ITEMS_ACCOUNT)}</View>
                 <View style={styles.section}>{renderSection(ITEMS_ACTIONS)}</View>
             </View>
         </SafeAreaView>
