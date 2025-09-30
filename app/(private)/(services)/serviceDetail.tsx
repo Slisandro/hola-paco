@@ -8,7 +8,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const ServiceDetail = () => {
     const router = useRouter();
-
     const [showCancelModal, setShowCancelModal] = useState(false);
 
     const handleGoBack = () => router.push("/(private)/(services)/Hire");
@@ -23,13 +22,18 @@ const ServiceDetail = () => {
         "https://i.pravatar.cc/90?img=5",
     ];
 
-    // Mapeo de íconos para mostrar
     const PAYMENT_ICONS: Record<string, any> = {
         card: "card",
         cash: "cash",
     };
+    const selectedPayment = "card";
 
-    const selectedPayment = "card"
+    // Hardcodeamos las fechas y horarios seleccionados
+    const selectedPreferences = [
+        { date: "Lunes, 1 de septiembre", hour: "09:00 AM - 11:00 AM" },
+        { date: "Miércoles, 3 de septiembre", hour: "02:00 PM - 04:00 PM" },
+        { date: "Viernes, 5 de septiembre", hour: "10:00 AM - 12:00 PM" },
+    ];
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -38,8 +42,8 @@ const ServiceDetail = () => {
             <Pressable style={styles.backButton} onPress={handleGoBack}>
                 <Ionicons name="arrow-back" size={24} color="#000" />
             </Pressable>
-            <ScrollView>
 
+            <ScrollView>
                 <View style={styles.content}>
                     <View style={styles.headerRow}>
                         <Text style={styles.orderText}>Pedido #000123</Text>
@@ -54,14 +58,12 @@ const ServiceDetail = () => {
                             <Text style={styles.regularText}>Tipo: Limpieza profunda</Text>
                             <Text style={styles.regularText}>Baños: 2</Text>
                             <Text style={styles.regularText}>Cuartos: 3</Text>
-
                             <View style={styles.rowBetween}>
                                 <Text style={styles.regularText}>Tamaño: 90m2</Text>
                                 <Text style={styles.priceText}>180 €</Text>
                             </View>
                         </View>
 
-                        {/* Nueva sección: Método de pago */}
                         {selectedPayment && (
                             <View style={styles.card}>
                                 <Text style={styles.sectionTitle}>Método de pago</Text>
@@ -69,17 +71,21 @@ const ServiceDetail = () => {
                                     <Ionicons name={PAYMENT_ICONS[selectedPayment] as any} size={24} color="#50B4E8" />
                                     <Text style={styles.regularText}>
                                         {selectedPayment === "card" ? "Tarjeta" :
-                                            selectedPayment === "cash" ? "Efectivo" :
-                                                selectedPayment === "paypal" ? "PayPal" : ""}
+                                            selectedPayment === "cash" ? "Efectivo" : ""}
                                     </Text>
                                 </View>
                             </View>
                         )}
 
+                        {/* Sección Programación con fechas y horarios seleccionados */}
                         <View style={styles.card}>
                             <Text style={styles.sectionTitle}>Programación</Text>
-                            <Text style={styles.regularText}>Jueves, 2 de septiembre</Text>
-                            <Text style={styles.regularText}>10:20 a.m. - 1:30 p.m.</Text>
+                            {selectedPreferences.map((pref, index) => (
+                                <View key={index} style={{ marginTop: 5 }}>
+                                    <Text style={styles.regularText}>{pref.date}</Text>
+                                    <Text style={styles.regularText}>{pref.hour}</Text>
+                                </View>
+                            ))}
                         </View>
 
                         <View style={styles.card}>
@@ -119,6 +125,7 @@ const ServiceDetail = () => {
                     </View>
                 </View>
             </ScrollView>
+
             <Modal
                 transparent
                 visible={showCancelModal}
@@ -140,7 +147,6 @@ const ServiceDetail = () => {
                     </View>
                 </View>
             </Modal>
-
         </SafeAreaView>
     )
 }
