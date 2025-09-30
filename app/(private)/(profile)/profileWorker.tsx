@@ -8,12 +8,12 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, V
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const ITEMS = [
-    { name: "Fontanería", icon: require("@/assets/icons/services/fontaneria.png") },
-    { name: "Limpieza", icon: require("@/assets/icons/services/limpieza.png") },
-    { name: "Electricista", icon: require("@/assets/icons/services/electricista.png") },
-    { name: "Carpintería", icon: require("@/assets/icons/services/carpinteria.png") },
-    { name: "Montaje", icon: require("@/assets/icons/services/montaje.png") },
-    { name: "Jardinería", icon: require("@/assets/icons/services/jardineria.png") },
+    { name: "Fontanería", icon: require("@/assets/icons/services/fontaneria.jpg") },
+    { name: "Limpieza", icon: require("@/assets/icons/services/limpieza.jpg") },
+    { name: "Electricista", icon: require("@/assets/icons/services/electricista.jpg") },
+    { name: "Carpintería", icon: require("@/assets/icons/services/carpinteria.jpg") },
+    { name: "Montaje", icon: require("@/assets/icons/services/montaje.jpg") },
+    { name: "Jardinería", icon: require("@/assets/icons/services/jardineria.jpg") },
 ]
 
 const ProfileWorker = () => {

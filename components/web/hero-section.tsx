@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 const categories = [
-    { id: 1, name: "Fontanería", path: require("@/assets/icons/services/fontaneria.png") },
-    { id: 2, name: "Limpieza", path: require("@/assets/icons/services/limpieza.png") },
-    { id: 3, name: "Electricista", path: require("@/assets/icons/services/electricista.png") },
-    { id: 4, name: "Carpintería", path: require("@/assets/icons/services/carpinteria.png") },
-    { id: 5, name: "Montaje", path: require("@/assets/icons/services/montaje.png") },
-    { id: 6, name: "Jardinería", path: require("@/assets/icons/services/jardineria.png") },
+    { id: 1, name: "Fontanería", path: require("@/assets/icons/services/fontaneria.jpg") },
+    { id: 2, name: "Limpieza", path: require("@/assets/icons/services/limpieza.jpg") },
+    { id: 3, name: "Electricista", path: require("@/assets/icons/services/electricista.jpg") },
+    { id: 4, name: "Carpintería", path: require("@/assets/icons/services/carpinteria.jpg") },
+    { id: 5, name: "Montaje", path: require("@/assets/icons/services/montaje.jpg") },
+    { id: 6, name: "Jardinería", path: require("@/assets/icons/services/jardineria.jpg") },
 ];
 
 const HeroSection = () => {
