@@ -11,7 +11,7 @@ const categories = [
     { id: 6, name: "Jardinería", path: require("@/assets/icons/services/jardineria.png") },
 ];
 
-const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
+const Fontaneria = () => {
     const screenWidth = Dimensions.get("window").width;
     const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
@@ -68,38 +68,18 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                     >
                         <Text
                             style={{
-                                fontSize: isSmallScreen ? 28 : 40,
+                                fontSize: 24,
                                 fontWeight: 700,
                                 color: "white",
                                 textAlign: isSmallScreen ? "center" : "left",
                             }}
                         >
-                            Encuentra y contrata al instante servicios confiables para tu hogar o negocio
+                            Titulo
                         </Text>
 
-                        <View
-                            style={{
-                                gap: 10,
-                                flexDirection: "column",
-                                alignItems: isSmallScreen ? "center" : "flex-start",
-                            }}
-                        >
-                            {["Seleccionar ubicación", "Ciudad", "Selecciona el servicio"].map((text, i) => (
-                                <Pressable
-                                    key={i}
-                                    style={{
-                                        paddingVertical: 10,
-                                        paddingHorizontal: 18,
-                                        backgroundColor: "white",
-                                        borderRadius: 12,
-                                        width: isSmallScreen ? "100%" : "75%",
-                                    }}
-                                    onPress={handleOpenModal}
-                                >
-                                    <Text style={{ opacity: 0.5, fontSize: 18, fontWeight: 500 }}>{text}</Text>
-                                </Pressable>
-                            ))}
-                        </View>
+                        <Text style={{ fontSize: 18, fontWeight: 500, color: "white" }}>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </Text>
 
                         <Pressable
                             style={{
@@ -118,7 +98,6 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                                     fontSize: 18,
                                     textAlign: "center",
                                 }}
-                                onPress={handleOpenModal}
                             >
                                 CONTRATA AHORA
                             </Text>
@@ -138,7 +117,7 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                         }}
                     >
                         <Image
-                            source={require("@/assets/images/paco-home.png")}
+                            source={require("@/assets/images/services/mecnico.png")}
                             style={{
                                 width: isSmallScreen ? "80%" : "100%",
                                 aspectRatio: 0.975,
@@ -167,4 +146,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HeroSection;
+export default Fontaneria;

@@ -9,13 +9,24 @@ import ServiceInfo from '@/components/web/service-info'
 import Reviews from '@/components/web/testimonials'
 import { useSplashAnimation } from '@/hooks/useSplashAnimation'
 import { Image } from 'expo-image'
+import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
-import { Animated, Dimensions, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Animated, Dimensions, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import DropDownPicker from 'react-native-dropdown-picker'
 
 const Index = () => {
   const { isReady } = useSplashAnimation();
+  const [showModal, setShowModal] = useState(false);
+  const [value, setValue] = useState("");
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
+
+  const handleToOffert = () => null
+
 
   React.useEffect(() => {
     const { height } = Dimensions.get("window");
@@ -31,7 +42,7 @@ const Index = () => {
   return (
     <ScrollView>
       <Header />
-      <HeroSection />
+      <HeroSection handleOpenModal={handleOpenModal} />
       <ServiceInfo />
       <BannerDiagonalReverse />
       <FeaturesSection2 />
@@ -56,6 +67,350 @@ const Index = () => {
       <FAQSection />
       <BannerDiagonalReverse2 />
       <Footer />
+      <Modal
+        visible={showModal}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={handleCloseModal}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "#0C85BE",
+              padding: 20,
+              width: "50%",
+              borderRadius: 12,
+              alignItems: "center",
+              gap: 10
+            }}
+          >
+            <Text style={{ width: "100%", fontWeight: "bold", color: "white", marginTop: 8, marginBottom: 4 }}>Filtrar búsqueda</Text>
+
+            <TextInput
+              placeholder="Seleccionar ubicación"
+              onFocus={handleOpenModal}
+              style={{
+                padding: 14,
+                backgroundColor: "white",
+                borderRadius: 4,
+                borderWidth: 1,
+                borderColor: "#00000050",
+                width: "100%"
+              }}
+              placeholderTextColor={"#1E1E1ECC"}
+            />
+
+            <TextInput
+              placeholder="Seleccionar ciudad"
+              onFocus={handleOpenModal}
+              style={{
+                padding: 14,
+                backgroundColor: "white",
+                borderRadius: 4,
+                borderWidth: 1,
+                borderColor: "#00000050",
+                width: "100%"
+              }}
+              placeholderTextColor={"#1E1E1ECC"}
+            />
+
+            <View
+              style={{
+                paddingHorizontal: 4,
+                backgroundColor: "white",
+                borderRadius: 4,
+                borderWidth: 1,
+                borderColor: "#00000050",
+                width: "100%",
+                height: 46,
+                justifyContent: "center",
+
+                zIndex: 1000
+              }}
+            >
+              <DropDownPicker
+                open={openDropdown}
+                value={value}
+                items={servicios}
+                placeholder="Seleccione un servicio"
+                setOpen={setOpenDropdown}
+                setValue={setValue}
+
+                style={{
+                  borderWidth: 0,
+                  backgroundColor: "transparent",
+                  paddingHorizontal: 10,
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginBottom: 2,
+                  zIndex: 1000
+                }}
+
+                textStyle={{
+                  fontSize: 14,
+                  textAlignVertical: "center",
+                  textAlign: "left",
+                }}
+
+                placeholderStyle={{
+                  opacity: 0.75,
+                }}
+
+                dropDownContainerStyle={{
+                  borderWidth: 0,
+                  backgroundColor: "#fff",
+                  elevation: 2,
+                }}
+              />
+            </View>
+
+            {(() => {
+              switch (value) {
+                case "fontaneria":
+                  return (
+                    <View style={{ width: "100%", gap: 10 }}>
+                      <Text style={{ fontWeight: "bold", color: "white", marginTop: 8, marginBottom: 4 }}>Servicio de Fontanería</Text>
+                      <TextInput
+                        placeholder="Tipo de reparación (caño, grifo, desagüe...)"
+                        style={{
+                          padding: 14,
+                          backgroundColor: "white",
+                          borderRadius: 4,
+                          borderWidth: 1,
+                          borderColor: "#00000050",
+                          width: "100%"
+                        }}
+                        placeholderTextColor={"#1E1E1ECC"}
+                      />
+                      <TextInput
+                        placeholder="Ubicación del problema (cocina, baño...)"
+                        style={{
+                          padding: 14,
+                          backgroundColor: "white",
+                          borderRadius: 4,
+                          borderWidth: 1,
+                          borderColor: "#00000050",
+                          width: "100%"
+                        }}
+                        placeholderTextColor={"#1E1E1ECC"}
+                      />
+                    </View>
+                  );
+
+                case "limpieza":
+                  return (
+                    <View style={{ width: "100%", gap: 10 }}>
+                      <Text style={{ fontWeight: "bold", color: "white", marginTop: 8, marginBottom: 4 }}>Servicio de Limpieza</Text>
+                      <TextInput
+                        placeholder="Tipo de limpieza (hogar, oficina, alfombra...)"
+                        style={{
+                          padding: 14,
+                          backgroundColor: "white",
+                          borderRadius: 4,
+                          borderWidth: 1,
+                          borderColor: "#00000050",
+                          width: "100%"
+                        }}
+                        placeholderTextColor={"#1E1E1ECC"}
+                      />
+                      <TextInput
+                        placeholder="Frecuencia (diaria, semanal, puntual...)"
+                        style={{
+                          padding: 14,
+                          backgroundColor: "white",
+                          borderRadius: 4,
+                          borderWidth: 1,
+                          borderColor: "#00000050",
+                          width: "100%"
+                        }}
+                        placeholderTextColor={"#1E1E1ECC"}
+                      />
+                    </View>
+                  );
+
+                case "electricista":
+                  return (
+                    <View style={{ width: "100%", gap: 10 }}>
+                      <Text style={{ fontWeight: "bold", color: "white", marginTop: 8, marginBottom: 4 }}>Servicio de Electricista</Text>
+                      <TextInput
+                        placeholder="Tipo de trabajo (instalación, reparación...)"
+                        style={{
+                          padding: 14,
+                          backgroundColor: "white",
+                          borderRadius: 4,
+                          borderWidth: 1,
+                          borderColor: "#00000050",
+                          width: "100%"
+                        }}
+                        placeholderTextColor={"#1E1E1ECC"}
+                      />
+                      <TextInput
+                        placeholder="Potencia o ubicación (sala, tablero, toma...)"
+                        style={{
+                          padding: 14,
+                          backgroundColor: "white",
+                          borderRadius: 4,
+                          borderWidth: 1,
+                          borderColor: "#00000050",
+                          width: "100%"
+                        }}
+                        placeholderTextColor={"#1E1E1ECC"}
+                      />
+                    </View>
+                  );
+
+                case "jardineria":
+                  return (
+                    <View style={{ width: "100%", gap: 10 }}>
+                      <Text style={{ fontWeight: "bold", color: "white", marginTop: 8, marginBottom: 4 }}>Servicio de Jardinería</Text>
+                      <TextInput
+                        placeholder="Tipo de área (patio, jardín, terraza...)"
+                        style={{
+                          padding: 14,
+                          backgroundColor: "white",
+                          borderRadius: 4,
+                          borderWidth: 1,
+                          borderColor: "#00000050",
+                          width: "100%"
+                        }}
+                        placeholderTextColor={"#1E1E1ECC"}
+                      />
+                      <TextInput
+                        placeholder="Tareas (corte de césped, poda, riego...)"
+                        style={{
+                          padding: 14,
+                          backgroundColor: "white",
+                          borderRadius: 4,
+                          borderWidth: 1,
+                          borderColor: "#00000050",
+                          width: "100%"
+                        }}
+                        placeholderTextColor={"#1E1E1ECC"}
+                      />
+                    </View>
+                  );
+
+                case "montaje":
+                  return (
+                    <View style={{ width: "100%", gap: 10 }}>
+                      <Text style={{ fontWeight: "bold", color: "white", marginTop: 8, marginBottom: 4 }}>Servicio de Montaje</Text>
+                      <TextInput
+                        placeholder="Qué necesitas montar (mueble, televisor, estante...)"
+                        style={{
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          borderRadius: 6,
+                          padding: 10,
+                          backgroundColor: "white",
+                        }}
+                      />
+                      <TextInput
+                        placeholder="Cantidad de objetos a montar"
+                        keyboardType="numeric"
+                        style={{
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          borderRadius: 6,
+                          padding: 10,
+                          backgroundColor: "white",
+                        }}
+                      />
+                    </View>
+                  );
+
+                case "carpinteria":
+                  return (
+                    <View style={{ width: "100%", gap: 10 }}>
+                      <Text style={{ fontWeight: "bold", color: "white", marginTop: 8, marginBottom: 4 }}>Servicio de Carpintería</Text>
+                      <TextInput
+                        placeholder="Tipo de trabajo (reparación, diseño, instalación...)"
+                        style={{
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          borderRadius: 6,
+                          padding: 10,
+                          backgroundColor: "white",
+                        }}
+                      />
+                      <TextInput
+                        placeholder="Material preferido (madera, MDF, melamina...)"
+                        style={{
+                          borderWidth: 1,
+                          borderColor: "#ccc",
+                          borderRadius: 6,
+                          padding: 10,
+                          backgroundColor: "white",
+                        }}
+                      />
+                    </View>
+                  );
+
+                default:
+                  return null;
+              }
+            })()}
+
+            <View style={{ width: "100%", flexDirection: "row", justifyContent: "space-around", gap: 20 }}>
+              <Pressable
+                onPress={handleToOffert}
+                style={{
+                  flex: 1,
+                  paddingVertical: 10,
+                  paddingHorizontal: 16,
+                  borderRadius: 4,
+                  alignSelf: "flex-start",
+                  backgroundColor: "#FFA962",
+                  marginTop: 10,
+                  borderWidth: 1,
+                  borderColor: "#FFA962",
+                  zIndex: 10
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    fontWeight: 500
+                  }}
+                >
+                  Buscar
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={handleCloseModal}
+                style={{
+                  flex: 1,
+                  paddingVertical: 10,
+                  paddingHorizontal: 16,
+                  borderRadius: 4,
+                  alignSelf: "flex-start",
+                  borderWidth: 1,
+                  borderColor: "white",
+                  marginTop: 10
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    color: "white",
+                    fontWeight: 500
+                  }}
+                >
+                  Cerrar
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   )
 }
@@ -322,6 +677,7 @@ const servicios = [
     nombre: "Fontanería",
     icono: require("@/assets/icons/services/fontaneria.png"),
     iconoSelected: require("@/assets/icons/services/fontaneria_selected.png"),
+    path: "/(web)/fontaneria"
   },
   {
     id: 2,
@@ -330,6 +686,7 @@ const servicios = [
     nombre: "Limpieza",
     icono: require("@/assets/icons/services/limpieza.png"),
     iconoSelected: require("@/assets/icons/services/limpieza_selected.png"),
+    path: "/(web)/limpieza"
   },
   {
     id: 3,
@@ -338,6 +695,7 @@ const servicios = [
     nombre: "Electricista",
     icono: require("@/assets/icons/services/electricista.png"),
     iconoSelected: require("@/assets/icons/services/electricista_selected.png"),
+    path: "/(web)/services/fontaneria"
   },
   {
     id: 4,
@@ -346,6 +704,7 @@ const servicios = [
     nombre: "Jardinería",
     icono: require("@/assets/icons/services/jardineria.png"),
     iconoSelected: require("@/assets/icons/services/jardineria_selected.png"),
+    path: "/(web)/jardineria"
   },
   {
     id: 5,
@@ -354,6 +713,7 @@ const servicios = [
     nombre: "Montaje",
     icono: require("@/assets/icons/services/montaje.png"),
     iconoSelected: require("@/assets/icons/services/montaje_selected.png"),
+    path: "/(web)/services/fontaneria"
   },
   {
     id: 6,
@@ -362,10 +722,12 @@ const servicios = [
     nombre: "Carpintería",
     icono: require("@/assets/icons/services/carpinteria.png"),
     iconoSelected: require("@/assets/icons/services/carpinteria_selected.png"),
+    path: "/(web)/services/fontaneria"
   },
 ];
 
 function Servicios() {
+  const router = useRouter()
   const [seleccionado, setSeleccionado] = useState(1);
   const screenWidth = Dimensions.get("window").width;
 
@@ -395,7 +757,11 @@ function Servicios() {
                 activo && stylesServicios.cardActivo,
                 { width: isMobile ? 100 : 120, height: isMobile ? 100 : 120 },
               ]}
-              onPress={() => setSeleccionado(item.id)}
+              onPress={() => {
+                // setSeleccionado(item.id)
+                // @ts-expect-error
+                router.push(item.path)
+              }}
               activeOpacity={0.8}
             >
               <Image
