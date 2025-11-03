@@ -1,118 +1,185 @@
-import { Image } from "expo-image";
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
-const { height } = Dimensions.get("window");
+export default function Reviews() {
+    const screenWidth = Dimensions.get("window").width;
+    const isMobile = screenWidth < 600;
+    const isTablet = screenWidth >= 600 && screenWidth < 1024;
 
-const testimonials = [
-    {
-        id: 1,
-        name: "Tatiane Torff",
-        role: "Customer",
-        avatar: require("@/assets/images/logo.png"),
-        text: "All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.",
-    },
-    {
-        id: 2,
-        name: "Leo Bator",
-        role: "Customer",
-        avatar: require("@/assets/images/logo.png"),
-        text: "The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
-    },
-    {
-        id: 3,
-        name: "Ashlynn Culhane",
-        role: "Customer",
-        avatar: require("@/assets/images/logo.png"),
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-];
-
-const Testimonials = () => {
-    const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
-
-    React.useEffect(() => {
-        const { height } = Dimensions.get("window");
-        setWindowHeight(height);
-    }, []);
+    const reviews = [
+        {
+            id: 1,
+            name: "Месяц назад",
+            avatar: "https://via.placeholder.com/40",
+            rating: 4,
+            text: `Заказывали у ребят разработку интернет-магазина. Что могу сказать, я
+      очень довольна, магазин сделали под ключ сразу с базовыми настройками
+      для SEO. Рекомендую, цена, качество и коммуникация на 100%.`,
+        },
+        {
+            id: 2,
+            name: "Armen Sargsyan",
+            avatar: null,
+            rating: 5,
+            text: `Пишу отзыв спустя 6 месяцев после сдачи проекта. За это время не
+      нашлось ни одной ошибки. Всё работает стабильно. Сотрудничаем дальше.`,
+        },
+    ];
 
     return (
-        <View style={[styles.section, { height: windowHeight }]}>
-            <View style={{ gap: 10, alignItems: "center" }}>
-                <Text style={styles.subtitle}>COMENTARIOS DE LOS CLIENTES</Text>
-                <Text style={styles.title}>QUÉ OPINAN NUESTROS CLIENTES</Text>
-            </View>
-
-            <View
-                style={styles.testimonialsContainer}
+        <View
+            style={[
+                styles.container,
+                { paddingVertical: isMobile ? 40 : 60, paddingHorizontal: isMobile ? 16 : 20 },
+            ]}
+        >
+            {/* Subtítulo */}
+            <Text
+                style={[
+                    styles.subtitle,
+                    {
+                        fontSize: isMobile ? 14 : 16,
+                        lineHeight: isMobile ? 20 : 22,
+                        maxWidth: isMobile ? 400 : 800,
+                    },
+                ]}
             >
-                {testimonials.map((t) => (
-                    <View key={t.id} style={styles.card}>
-                        <Image source={t.avatar} style={styles.avatar} contentFit="cover" />
-                        <Text style={styles.text}>{t.text}</Text>
-                        <Text style={styles.name}>{t.name}</Text>
-                        <Text style={styles.role}>{t.role}</Text>
+                Descubre lo que nuestros clientes opinan sobre nosotros. Cada reseña
+                refleja la experiencia real de quienes confiaron en nosotros y
+                comprobaron los resultados. Sus palabras son nuestra mejor carta de
+                presentación y la motivación para seguir mejorando cada día.
+            </Text>
+
+            {/* Título principal */}
+            <Text
+                style={[
+                    styles.title,
+                    { fontSize: isMobile ? 16 : 20, marginBottom: isMobile ? 30 : 40 },
+                ]}
+            >
+                Tu satisfacción también puede ser la próxima reseña destacada.
+            </Text>
+
+            {/* Scroll horizontal de reseñas */}
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={[
+                    styles.scrollContent,
+                    { gap: isMobile ? 16 : 20, paddingHorizontal: isMobile ? 8 : 12 },
+                ]}
+            >
+                {reviews.map((review) => (
+                    <View
+                        key={review.id}
+                        style={[
+                            styles.card,
+                            { width: isMobile ? 260 : isTablet ? 320 : 380 },
+                        ]}
+                    >
+                        {/* Header de usuario */}
+                        <View style={styles.userHeader}>
+                            {review.avatar ? (
+                                <Image
+                                    source={{ uri: review.avatar }}
+                                    style={styles.avatar}
+                                />
+                            ) : (
+                                <View style={styles.avatarPlaceholder}>
+                                    <Text style={styles.avatarText}>
+                                        {review.name.charAt(0).toUpperCase()}
+                                    </Text>
+                                </View>
+                            )}
+                            <View>
+                                <Text style={styles.userName}>{review.name}</Text>
+                                <View style={styles.rating}>
+                                    {[...Array(5)].map((_, i) => (
+                                        <Ionicons
+                                            key={i}
+                                            name={i < review.rating ? "star" : "star-outline"}
+                                            color="#FFA500"
+                                            size={14}
+                                        />
+                                    ))}
+                                </View>
+                            </View>
+                        </View>
+
+                        {/* Texto de reseña */}
+                        <Text style={styles.reviewText}>{review.text}</Text>
                     </View>
                 ))}
-            </View>
+            </ScrollView>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
-    section: {
-        paddingVertical: 40,
+    container: {
+        backgroundColor: "#0077B6",
         alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#fff",
-        gap: 40
     },
     subtitle: {
-        fontSize: 12,
-        color: "#888",
-        letterSpacing: 1,
-        marginBottom: 4,
+        color: "white",
+        textAlign: "center",
+        opacity: 0.9,
+        marginBottom: 12,
     },
     title: {
-        fontSize: 22,
-        color: "#000",
+        color: "white",
         textAlign: "center",
-        marginBottom: 24,
+        fontWeight: "bold",
     },
-    testimonialsContainer: {
-        paddingHorizontal: 16,
-        gap: 30,
-        flexDirection: "row"
+    scrollContent: {
+        justifyContent: "center",
     },
     card: {
-        width: 250,
-        backgroundColor: "#f9f9f9",
+        backgroundColor: "white",
         borderRadius: 12,
-        padding: 16,
+        padding: 20,
+        shadowColor: "#000",
+        shadowOpacity: 0.15,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 6,
+        elevation: 3,
+    },
+    userHeader: {
+        flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
-        height: 250,
+        marginBottom: 8,
     },
     avatar: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        marginBottom: 12,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        marginRight: 10,
     },
-    text: {
+    avatarPlaceholder: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: "#0077B6",
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: 10,
+    },
+    avatarText: {
+        color: "white",
+        fontWeight: "bold",
+    },
+    userName: {
+        fontWeight: "bold",
         fontSize: 14,
-        color: "#555",
-        textAlign: "center",
-        marginBottom: 12,
     },
-    name: {
-        fontSize: 14,
-        color: "#000",
+    rating: {
+        flexDirection: "row",
+        marginTop: 2,
     },
-    role: {
-        fontSize: 12,
-        color: "#888",
+    reviewText: {
+        fontSize: 13,
+        color: "#333",
+        lineHeight: 18,
     },
 });
-
-export default Testimonials;

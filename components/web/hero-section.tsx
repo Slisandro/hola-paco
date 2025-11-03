@@ -1,6 +1,6 @@
 import { Image, ImageBackground } from "expo-image";
 import React, { useState } from "react";
-import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 
 const categories = [
     { id: 1, name: "Fontanería", path: require("@/assets/icons/services/fontaneria.png") },
@@ -12,17 +12,25 @@ const categories = [
 ];
 
 const HeroSection = () => {
-    const [showModal, setShowModal] = useState(false);
-
-    const handleOpenModal = () => setShowModal(true);
-    const handleCloseModal = () => setShowModal(false);
-
-    const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
+    const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
     React.useEffect(() => {
-        const { height } = Dimensions.get("window");
-        setWindowHeight(height);
+        const { width, height } = Dimensions.get("window");
+        setWindowSize({ width, height });
+
+        const handleResize = () => {
+            const { width, height } = Dimensions.get("window");
+            setWindowSize({ width, height });
+        };
+
+        if (Platform.OS === "web") {
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
+        }
     }, []);
+
+    // Breakpoint example
+    const isSmallScreen = windowSize.width < 768;
 
     return (
         <View style={{ flex: 1 }}>
@@ -32,101 +40,111 @@ const HeroSection = () => {
                 contentFit="cover"
             />
 
-            {/* @ts-ignore */}
-            <View style={[styles.container, { minHeight: windowHeight ? windowHeight : "100vh" }]}>
-
-                <View style={{ flexDirection: "row", alignItems: "center", height: "100%" }}>
-                    <View style={{ width: "50%", gap: 30, height: "100%", justifyContent: "center", paddingHorizontal: 90 }}>
+            <View
+                style={[
+                    styles.container,
+                    // @ts-expect-error
+                    { minHeight: windowSize.height ? windowSize.height : "100vh" },
+                ]}
+            >
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        height: "100%",
+                        paddingHorizontal: isSmallScreen ? 20 : 90,
+                        gap: isSmallScreen ? 20 : 30,
+                    }}
+                >
+                    {/* Texto y botones */}
+                    <View
+                        style={{
+                            width: isSmallScreen ? "100%" : "50%",
+                            justifyContent: "center",
+                            gap: 20,
+                        }}
+                    >
                         <Text
                             style={{
-                                fontSize: 40,
+                                fontSize: isSmallScreen ? 28 : 40,
                                 fontWeight: 700,
                                 color: "white",
+                                textAlign: isSmallScreen ? "center" : "left",
                             }}
                         >
                             Encuentra y contrata al instante servicios confiables para tu hogar o negocio
                         </Text>
-                        <View style={{ gap: 10 }}>
-                            <Pressable
-                                onPress={handleOpenModal}
-                                style={{
-                                    paddingVertical: 10,
-                                    paddingLeft: 18,
-                                    backgroundColor: "white",
-                                    borderRadius: 12,
-                                    width: "75%"
-                                }}
-                            >
-                                <Text style={{ opacity: .5, fontSize: 18, fontWeight: 500 }}>Seleccionar ubicación</Text>
-                            </Pressable>
 
-                            <Pressable
-                                onPress={handleOpenModal}
-                                style={{
-                                    paddingVertical: 10,
-                                    paddingLeft: 18,
-                                    backgroundColor: "white",
-                                    borderRadius: 12,
-                                    width: "75%"
-                                }}
-                            >
-                                <Text style={{ opacity: .5, fontSize: 18, fontWeight: 500 }}>Ciudad</Text>
-                            </Pressable>
-
-                            <Pressable
-                                onPress={handleOpenModal}
-                                style={{
-                                    paddingVertical: 10,
-                                    paddingLeft: 18,
-                                    backgroundColor: "white",
-                                    borderRadius: 12,
-                                    width: "75%"
-                                }}
-                            >
-                                <Text style={{ opacity: .5, fontSize: 18, fontWeight: 500 }}>Selecciona el servicio</Text>
-                            </Pressable>
+                        <View
+                            style={{
+                                gap: 10,
+                                flexDirection: "column",
+                                alignItems: isSmallScreen ? "center" : "flex-start",
+                            }}
+                        >
+                            {["Seleccionar ubicación", "Ciudad", "Selecciona el servicio"].map((text, i) => (
+                                <Pressable
+                                    key={i}
+                                    style={{
+                                        paddingVertical: 10,
+                                        paddingHorizontal: 18,
+                                        backgroundColor: "white",
+                                        borderRadius: 12,
+                                        width: isSmallScreen ? "100%" : "75%",
+                                    }}
+                                >
+                                    <Text style={{ opacity: 0.5, fontSize: 18, fontWeight: 500 }}>{text}</Text>
+                                </Pressable>
+                            ))}
                         </View>
 
                         <Pressable
-                            onPress={handleOpenModal}
                             style={{
                                 paddingVertical: 10,
                                 paddingHorizontal: 30,
                                 borderRadius: 4,
-                                alignSelf: "flex-start",
                                 backgroundColor: "#FFA962",
-                                marginTop: 0
+                                alignSelf: isSmallScreen ? "center" : "flex-start",
+                                marginTop: 10,
                             }}
                         >
                             <Text
                                 style={{
-                                    textAlign: "center",
                                     color: "white",
                                     fontWeight: 500,
-                                    fontSize: 18
+                                    fontSize: 18,
+                                    textAlign: "center",
                                 }}
                             >
                                 CONTRATA AHORA
                             </Text>
                         </Pressable>
-
                     </View>
+
+                    {/* Imagen */}
 
                     <View
                         style={{
-                            width: "50%", height: "100%"
+                            width: isSmallScreen ? "100%" : "45%",
+                            marginTop: isSmallScreen ? 20 : 0,
+                            justifyContent: "flex-end",
+                            alignItems: "center",
+                            position: "relative",
+                            height: "100%"
                         }}
                     >
                         <Image
                             source={require("@/assets/images/paco-home.png")}
                             style={{
-                                width: "100%",
-                                height: "90%",
-                                marginTop: "auto"
+                                width: isSmallScreen ? "80%" : "100%",
+                                aspectRatio: 0.975, 
+                                objectFit: "contain", 
+                                position: "absolute",
+                                bottom: 0
                             }}
-                            contentFit="contain"
                         />
                     </View>
+
                 </View>
             </View>
         </View>
@@ -137,78 +155,11 @@ const styles = StyleSheet.create({
     container: {
         position: "relative",
         flex: 1,
-        paddingHorizontal: 16,
         paddingVertical: 24,
         paddingBottom: 0,
         gap: 30,
         justifyContent: "center",
         backgroundColor: "#0C85BEDD",
-    },
-    title: {
-        fontSize: 34,
-        textAlign: "center",
-        color: "#fff",
-    },
-    inputsContainer: {
-        flexDirection: "row",
-        marginBottom: 20,
-        gap: 20,
-        marginHorizontal: "auto",
-    },
-    input: {
-        flex: 1,
-        backgroundColor: "#fff",
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        paddingVertical: 10,
-        fontSize: 14,
-        color: "#1E1E1E",
-        width: 250
-    },
-    categoriesWrapper: {
-        height: 150,
-        width: "100%",
-        justifyContent: "center"
-    },
-    categoriesContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 12,
-        paddingHorizontal: 16,
-        marginHorizontal: "auto"
-    },
-    categoryCard: {
-        width: 150,
-        height: 150,
-        borderRadius: 12,
-        overflow: "hidden",
-    },
-    categoryCardActive: {
-        borderWidth: 2,
-        borderColor: "#FFA962",
-    },
-    categoryImage: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: "rgba(0,0,0,0.35)",
-        borderRadius: 12,
-    },
-    categoryText: {
-        color: "#fff",
-        fontWeight: "700",
-        textAlign: "center",
-        position: "absolute",
-        zIndex: 2,
-        fontSize: 14,
-        paddingHorizontal: 4,
-        bottom: 15
-    },
-    categoryTextActive: {
-        color: "#FFD700",
     },
 });
 
