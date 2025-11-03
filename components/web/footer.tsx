@@ -74,7 +74,7 @@ const Footer = () => {
                         style={styles.logo}
                     />
                     <Text style={styles.logoText}>
-                        <Text style={{ color: "#50B4E8" }}>Hola Paco</Text>
+                        <Text style={{ color: "#0C85BE" }}>Hola Paco</Text>
                     </Text>
                 </View>
 
@@ -97,8 +97,8 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.background,
-        padding: 20,
+        backgroundColor: "white",
+        padding: 40,
         flexDirection: "row",
         justifyContent: "space-between",
         flexWrap: "wrap",
@@ -128,15 +128,15 @@ const styles = StyleSheet.create({
     },
     rightSection: {
         paddingVertical: 15,
-        flex: 2,
+        flex: 1,
         flexDirection: "row",
         justifyContent: "space-around",
     },
     whatsappButton: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: COLORS.accent,
-        paddingVertical: 8,
+        backgroundColor: "#FFA962",
+        paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 6,
         marginBottom: 10,
@@ -145,13 +145,12 @@ const styles = StyleSheet.create({
     whatsappText: {
         color: "#fff",
         marginLeft: 8,
-        fontWeight: "bold",
+        fontWeight: "700",
         fontSize: 20
     },
     contact: {
-        fontSize: 13,
-        // marginBottom: 4,
-        color: COLORS.primary,
+        fontSize: 14,
+        color: "#0C85BE",
     },
     link: {
         fontSize: 10,

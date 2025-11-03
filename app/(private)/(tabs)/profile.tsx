@@ -1,40 +1,60 @@
 import { useAccount } from '@/contexts/AccountContext';
+import { FontAwesome, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { Image } from "expo-image";
 import { useRouter } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ColorValue, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ITEMS_PROFILE = [
     {
         name: "Mi perfil",
-        icon: require("@/assets/icons/profile/user.png"),
-        route: "/(profile)/profile"
+        description: "Personaliza tu información",
+        icon: <FontAwesome5 name="user" size={24} color="#286d83" />,
+        route: "/(profile)/profile",
+        bgColor: "#b9e9fe"
     },
     {
         name: "Contacto",
-        icon: require("@/assets/icons/profile/contacts.png"),
-        route: "/(profile)/contact"
+        description: "Actualiza tus detalles",
+        icon: <FontAwesome5 name="envelope" size={24} color="white" />,
+        route: "/(profile)/contact",
+        bgColor: "#26a6e7"
     },
 ];
 
 const ITEMS_ACTIONS = [
     {
         name: "Compartir",
-        icon: require("@/assets/icons/profile/share.png"),
-        route: "/(private)/(profile)/registerCompany"
+        description: "Invitá a tus amigos",
+        icon: <FontAwesome name="share" size={24} color="#25a1e1" />,
+        route: "/(private)/(profile)/registerCompany",
+        bgColor: "#89edee"
     },
     {
-        name: "Comentarios",
-        icon: require("@/assets/icons/profile/star.png"),
-        route: "/(private)/(profile)/registerCompany"
+        name: "Dejar opinión",
+        description: "Comparte tu experiencia",
+        icon: <MaterialIcons name="history-toggle-off" size={26} color="#795548" />,
+        route: "/(private)/(profile)/registerCompany",
+        bgColor: "#fdcc65",
     },
     {
         name: "Cerrar sesión",
-        icon: require("@/assets/icons/profile/log-out.png"),
-        route: "/(public)/auth"
+        description: "Salir de tu cuenta",
+        icon: <MaterialCommunityIcons name="logout" size={24} color="white" />,
+        route: "/(public)/auth",
+        bgColor: "#feaa46",
     },
 ];
+
+interface Item {
+    name: string,
+    description: string,
+    icon: any,
+    route: any,
+    bgColor: ColorValue
+}
 
 export default function ProfileScreen() {
     const router = useRouter();
@@ -44,27 +64,53 @@ export default function ProfileScreen() {
         {
             name: accountType === "profesional"
                 ? "Historial de clientes"
-                : "Historial de profesionales contratados",
-            icon: require("@/assets/icons/profile/history.png"),
-            route: "/(profile)/history"
+                : "Historial de profesionales",
+            icon: (
+                <Image
+                    source={require("@/assets/icons/profile/historial.png")}
+                    style={{ width: 24, height: 26 }}
+                />
+            ),
+            route: "/(profile)/history",
+            description: "Revisa tus interacciones anteriores",
+            bgColor: "#E67E22", // Verde pastel
         },
-        accountType === "profesional" ? {
-            name: "Métodos de pagos",
-            icon: require("@/assets/icons/profile/wallet.png"),
-            route: "/(private)/(profile)/paymentMethod"
-        } : {
-            name: "Conviértete en trabajador",
-            icon: require("@/assets/icons/profile/construction-worker.png"),
-            route: "/(private)/(profile)/profileWorker"
-        },
+        accountType === "profesional"
+            ? {
+                name: "Métodos de pagos",
+                icon: <FontAwesome5 name="credit-card" size={22} color="#F9A825" />,
+                route: "/(private)/(profile)/paymentMethod",
+                description: "Administra tus formas de cobro",
+                bgColor: "#F4F6F7",
+            }
+            : {
+                name: "Conviértete en trabajador",
+                icon: (
+                    <Image
+                        source={require("@/assets/icons/profile/llave-inglesa.png")}
+                        style={{ width: 24, height: 24 }}
+                    />
+                ),
+                route: "/(private)/(profile)/profileWorker",
+                description: "Ofrece tus servicios en la app",
+                bgColor: "#1B4965", 
+            },
         {
             name: "Registrar una empresa",
-            icon: require("@/assets/icons/profile/bricks.png"),
-            route: "/(private)/(profile)/registerCompany"
+            icon: (
+                <Image
+                    source={require("@/assets/icons/profile/company.png")}
+                    style={{ width: 28, height: 28 }}
+                />
+            ),
+            route: "/(private)/(profile)/registerCompany",
+            description: "Completa el formulario",
+            bgColor: "#2C7A7B",
         },
     ];
 
-    const renderSection = (items: { name: string, icon: any, route: any }[]) =>
+
+    const renderSection = (items: Item[]) =>
         items.map((item, index) => (
             <TouchableOpacity
                 key={index}
@@ -72,8 +118,24 @@ export default function ProfileScreen() {
                 onPress={() => item.route && router.push(item.route)}
             >
                 <View style={styles.itemLeft}>
-                    <Image source={item.icon} style={styles.itemIcon} />
-                    <Text style={styles.itemText}>{item.name}</Text>
+                    <View
+                        style={{
+                            backgroundColor: item.bgColor,
+                            padding: 10,
+                            borderRadius: 10,
+                            marginRight: 10,
+                            width: 50,
+                            height: 50,
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}
+                    >
+                        {item.icon}
+                    </View>
+                    <View style={{ gap: 4 }}>
+                        <Text style={styles.itemText}>{item.name}</Text>
+                        <Text style={[styles.itemText, { fontWeight: 400, fontSize: 14 }]}>{item.description}</Text>
+                    </View>
                 </View>
                 <FontAwesome5 name="arrow-right" size={16} color="#0F0F0F50" />
             </TouchableOpacity>
@@ -81,15 +143,44 @@ export default function ProfileScreen() {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <StatusBar style="dark" />
-            <View style={styles.header}>
-                <Text style={styles.titleHeader}>Mafi Mushkil</Text>
-            </View>
-            <View style={styles.container}>
-                <View style={styles.section}>{renderSection(ITEMS_PROFILE)}</View>
-                <View style={styles.section}>{renderSection(ITEMS_ACCOUNT)}</View>
-                <View style={styles.section}>{renderSection(ITEMS_ACTIONS)}</View>
-            </View>
+            <ScrollView>
+                <StatusBar style="dark" />
+                <View style={[styles.header, { position: "relative" }]}>
+                    <View style={{ position: "relative", flexDirection: "row", justifyContent: "flex-start", alignItems: "center", width: "100%", paddingHorizontal: 20, paddingTop: 15, gap: 6 }}>
+                        <Image
+                            source={require("@/assets/images/logo.png")}
+                            style={{
+                                width: 100,
+                                height: 100,
+                                borderRadius: 60,
+                            }}
+                            contentFit="contain"
+                        />
+                        <View>
+                            <Text style={{ fontWeight: 800, fontSize: 20, fontFamily: "Roboto Flex" }}>¡Hola Mafi!</Text>
+                            <Text style={{ fontWeight: 600, fontSize: 16, fontFamily: "Roboto Flex" }}>Bienvenido de nuevo </Text>
+                        </View>
+                    </View>
+                    <View style={[styles.profileImageWrapper]}>
+                        <Image
+                            source={{ uri: "https://i.pravatar.cc/100" }}
+                            style={styles.profileImage}
+                            contentFit="contain"
+                        />
+
+                    </View>
+                    <Text style={styles.titleHeader}>Mafi Mushkil</Text>
+                    <Text style={[styles.titleHeader, { fontSize: 18, fontWeight: 400 }]}>mafimus@example.com</Text>
+                    <TouchableOpacity style={styles.changeBgButton}>
+                        <Text style={styles.changeBgText}>Editar Perfil</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.container}>
+                    <View style={styles.section}>{renderSection(ITEMS_PROFILE)}</View>
+                    <View style={styles.section}>{renderSection(ITEMS_ACCOUNT)}</View>
+                    <View style={styles.section}>{renderSection(ITEMS_ACTIONS)}</View>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -97,19 +188,21 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: "#FFFF",
+        paddingBottom: 50
     },
     container: {
         flex: 1,
         paddingHorizontal: 10,
         paddingVertical: 10,
-        backgroundColor: "#F3F5FD"
+        backgroundColor: "#d6fcff"
     },
     header: {
-        height: 45,
+        height: "auto",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#FFF"
+        backgroundColor: "#82dafe",
+        gap: 10
     },
     titleHeader: {
         fontFamily: "Roboto Flex",
@@ -118,6 +211,34 @@ const styles = StyleSheet.create({
         lineHeight: 22,
         letterSpacing: 0,
         color: "#000",
+    },
+    profileImageWrapper: {
+        alignItems: "center",
+        // marginVertical: 10,
+        borderWidth: 2,
+        borderColor: "#FFFFFF",
+        borderRadius: 60,
+    },
+    profileImage: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+    },
+    changeBgButton: {
+        backgroundColor: "white",
+        paddingVertical: 10,
+        borderRadius: 12,
+        alignItems: "center",
+        width: "50%",
+        marginBottom: 10,
+        marginHorizontal: "auto",
+        borderWidth: 1,
+        borderColor: "#FFFFFF66"
+    },
+    changeBgText: {
+        color: "#50B4E8",
+        fontWeight: "600",
+        fontSize: 16,
     },
     section: {
         marginBottom: 20,
@@ -139,15 +260,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     itemIcon: {
-        width: 22,
-        height: 22,
+        width: 40,
+        height: 40,
         marginRight: 12,
         resizeMode: "contain",
     },
     itemText: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: "500",
-        color: "#333",
+        color: "#1d253b",
     },
     itemArrow: {
         fontSize: 18,

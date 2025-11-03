@@ -18,30 +18,36 @@ const COLORS = {
 const DATA = [
     {
         id: "1",
-        name: "Juan Pérez",
+        name: "Juan",
         rating: 4.5,
         reviews: 120,
         description: "Especialista en plomería y reparaciones de hogar.",
-        image: "https://i.pravatar.cc/40?img=1",
+        // image: "https://i.pravatar.cc/40?img=1",
         payments: ["cash", "card"],
+        iva: "Precio final sin impuestos",
+        jobComplete: "+20 trabajos completados"
     },
     {
         id: "2",
-        name: "María López",
+        name: "María",
         rating: 5,
         reviews: 98,
         description: "Diseñadora de interiores con experiencia en espacios modernos.",
         image: "https://i.pravatar.cc/40?img=2",
         payments: ["card"],
+        iva: "Precio final IVA incluido",
+        jobComplete: "+20 trabajos completados"
     },
     {
         id: "3",
-        name: "Juan Pérez",
+        name: "Pedro",
         rating: 4.5,
         reviews: 120,
         description: "Especialista en plomería y reparaciones de hogar.",
         image: "https://i.pravatar.cc/40?img=1",
         payments: ["cash"],
+        iva: "Precio final sin impuestos",
+        jobComplete: "+20 trabajos completados"
     }
 ];
 
@@ -148,7 +154,30 @@ const ListItem = ({ item }: { item: any }) => {
         <View style={styles.card}>
             {/* Primera fila: Imagen + Nombre + Estrellas */}
             <View style={styles.topRow}>
-                <Image source={{ uri: item.image }} style={styles.avatar} />
+                {
+                    item.image
+                        ? <Image source={{ uri: item.image }} style={styles.avatar} />
+                        : (
+                            <View
+                                style={[
+                                    styles.avatar,
+                                    { backgroundColor: "#FFC356CC", alignItems: "center", justifyContent: "center" },
+                                ]}
+                            >
+                                <Text
+                                    style={{
+                                        textAlign: "center",
+                                        lineHeight: 40,
+                                        fontSize: 20,
+                                        fontWeight: "bold",
+                                        color: "#000",
+                                    }}
+                                >
+                                    {item.name[0]}
+                                </Text>
+                            </View>
+                        )
+                }
                 <View style={{ flex: 1 }}>
                     <Text style={styles.name}>{item.name}</Text>
 
@@ -166,10 +195,10 @@ const ListItem = ({ item }: { item: any }) => {
                         </Text>
                     </View>
                 </View>
-                
+
                 <View style={{ alignItems: "flex-end" }}>
                     <Text style={styles.price}>80 €</Text>
-                    <Text style={styles.labelPrice}>Precio final sin impuestos</Text>
+                    <Text style={styles.labelPrice}>{item.iva}</Text>
                 </View>
 
             </View>
@@ -178,10 +207,15 @@ const ListItem = ({ item }: { item: any }) => {
                 {item.payments.includes("cash") && (
                     <Image source={require("@/assets/icons/profile/cash.png")} style={styles.paymentIcon} />
                 )}
+                
                 {item.payments.includes("card") && (
                     <Image source={require("@/assets/icons/profile/credit-card.png")} style={styles.paymentIcon} />
                 )}
+
+                <Text style={[styles.labelPrice, { marginLeft: "auto", opacity: 0.8 }]}>{item.jobComplete}</Text>
             </View>
+
+            <Text style={styles.description}>Responde en menos de 1h.</Text>
 
             {/* Descripción */}
             <Text style={styles.description}>{item.description}</Text>

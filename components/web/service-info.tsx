@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
 import React from "react";
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 
 const ServiceInfo = () => {
     const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
@@ -11,108 +11,124 @@ const ServiceInfo = () => {
     }, []);
 
     return (
-        <View style={[styles.section, { height: windowHeight }]}>
-            <Image
-                source={require("@/assets/images/service-info.png")}
-                style={styles.image}
-                contentFit="cover"
-            />
-
-            <View style={styles.content}>
-                <Text style={styles.overline}>ACERCA DE HOLA PACO</Text>
-                <Text style={styles.title}>SERVICIOS DE LIMPIEZA RESIDENCIAL</Text>
-                <Text style={styles.description}>
-                    In a professional context it often happens that private or corporate clients order a publication to be made and presented with the actual content still not being ready.
+        <View
+            style={[
+                styles.section,
+                // @ts-ignore
+                { minHeight: windowHeight ? windowHeight * 0.7 : "70vh" },
+            ]}
+        >
+            <View style={{ marginTop: 30, gap: 20 }}>
+                <Text style={[styles.heading, { fontSize: 28, color: "#000000" }]}>
+                    ¿Por qué elegir nuestros servicios?
                 </Text>
-                <Text style={styles.description}>
-                    On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment.
-                </Text>
-
-                <View style={styles.stats}>
-                    <View style={styles.stat}>
-                        <Text style={styles.statValue}>53k</Text>
-                        <Text style={styles.statLabel}>Layout Done</Text>
-                    </View>
-                    <View style={styles.stat}>
-                        <Text style={styles.statValue}>10k</Text>
-                        <Text style={styles.statLabel}>Projects Done</Text>
-                    </View>
-                    <View style={styles.stat}>
-                        <Text style={styles.statValue}>150</Text>
-                        <Text style={styles.statLabel}>Gov. Awards</Text>
-                    </View>
-                </View>
-
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>MÁS INFORMACIÓN</Text>
-                </TouchableOpacity>
+                <FeaturesSection />
             </View>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    section: {
+function FeaturesSection() {
+    const features = [
+        {
+            id: 1,
+            icon: require("@/assets/images/homepage/guard.png"),
+            title: "VERIFICADO Y SEGURO",
+            description:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        },
+        {
+            id: 2,
+            icon: require("@/assets/images/homepage/click.png"),
+            title: "FÁCIL Y RÁPIDO",
+            description:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        },
+        {
+            id: 3,
+            icon: require("@/assets/images/homepage/files.png"),
+            title: "CONTROL DE GASTOS",
+            description:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        },
+    ];
+
+    return (
+        <View style={stylesFeature.container}>
+            {features.map((item) => (
+                <View key={item.id} style={stylesFeature.card}>
+                    <Image source={item.icon} style={stylesFeature.icon} contentFit="contain" />
+                    <Text style={stylesFeature.title}>{item.title}</Text>
+                    <Text style={stylesFeature.description}>{item.description}</Text>
+                </View>
+            ))}
+        </View>
+    );
+}
+
+const stylesFeature = StyleSheet.create({
+    container: {
         flexDirection: "row",
+        flexWrap: "wrap", // ✅ permite que se ajusten al ancho
+        justifyContent: "center", // ✅ centrado en pantallas grandes o chicas
+        alignItems: "flex-start",
+        gap: 24, // espacio entre cards
+        paddingVertical: 30,
+        paddingHorizontal: 16,
+        width: "100%",
+    },
+    card: {
+        width: "90%", // ✅ móvil
+        maxWidth: 280, // ✅ web (no más de 280px)
+        alignItems: "center",
+        textAlign: "center",
+        backgroundColor: "#FFF",
+        borderRadius: 16,
+        shadowColor: "#000",
+        shadowOpacity: 0.1,
+        shadowRadius: 6,
+        elevation: 3,
+        paddingVertical: 25,
+        paddingHorizontal: 20,
+        gap: 10
+    },
+    icon: {
+        width: 80,
+        height: 80,
+        marginBottom: 12,
+        tintColor: "#FF9E5E",
+    },
+    title: {
+        fontWeight: "700",
+        textAlign: "center",
+        color: "#000",
+        marginVertical: 8,
+        fontSize: 18,
+    },
+    description: {
+        fontWeight: "400",
+        textAlign: "center",
+        color: "#555",
+        fontSize: 14,
+    },
+});
+
+const styles = StyleSheet.create({
+    heading: {
+        marginHorizontal: "auto",
+        fontWeight: "700",
+        fontSize: 20,
+        color: "white",
+        textAlign: "center",
+        textTransform: "uppercase",
+    },
+    section: {
+        backgroundColor: "white",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         gap: 40,
         padding: 20,
-    },
-    image: {
-        width: 300,
-        height: 300,
-        borderRadius: 12,
-        marginBottom: 20,
-    },
-    content: {
-        flex: 1,
-        gap: 16,
-        maxWidth: 350,
-    },
-    overline: {
-        fontSize: 10,
-        letterSpacing: 1,
-        color: "#888",
-        textTransform: "uppercase",
-    },
-    title: {
-        fontSize: 30,
-        lineHeight: 30,
-        color: "#000",
-    },
-    description: {
-        fontSize: 14,
-        color: "#555",
-        lineHeight: 20,
-    },
-    stats: {
-        flexDirection: "row",
-        gap: 20,
-        marginTop: 8,
-    },
-    stat: {
-        alignItems: "center",
-    },
-    statValue: {
-        fontSize: 18,
-        color: "#000",
-    },
-    statLabel: {
-        fontSize: 12,
-        color: "#555",
-    },
-    button: {
-        marginTop: 12,
-        backgroundColor: "#50B4E8",
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 50,
-        alignSelf: "flex-start",
-    },
-    buttonText: {
-        fontSize: 14,
-        color: "#fff",
     },
 });
 

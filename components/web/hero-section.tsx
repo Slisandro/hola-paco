@@ -1,18 +1,22 @@
-import { ImageBackground } from "expo-image";
+import { Image, ImageBackground } from "expo-image";
 import React, { useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
 const categories = [
-    { id: 1, name: "Fontanería", path: require("@/assets/icons/services/fontaneria.jpg") },
-    { id: 2, name: "Limpieza", path: require("@/assets/icons/services/limpieza.jpg") },
-    { id: 3, name: "Electricista", path: require("@/assets/icons/services/electricista.jpg") },
-    { id: 4, name: "Carpintería", path: require("@/assets/icons/services/carpinteria.jpg") },
-    { id: 5, name: "Montaje", path: require("@/assets/icons/services/montaje.jpg") },
-    { id: 6, name: "Jardinería", path: require("@/assets/icons/services/jardineria.jpg") },
+    { id: 1, name: "Fontanería", path: require("@/assets/icons/services/fontaneria.png") },
+    { id: 2, name: "Limpieza", path: require("@/assets/icons/services/limpieza.png") },
+    { id: 3, name: "Electricista", path: require("@/assets/icons/services/electricista.png") },
+    { id: 4, name: "Carpintería", path: require("@/assets/icons/services/carpinteria.png") },
+    { id: 5, name: "Montaje", path: require("@/assets/icons/services/montaje.png") },
+    { id: 6, name: "Jardinería", path: require("@/assets/icons/services/jardineria.png") },
 ];
 
 const HeroSection = () => {
-    const [selected, setSelected] = useState(1);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleOpenModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
+
     const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
 
     React.useEffect(() => {
@@ -29,50 +33,100 @@ const HeroSection = () => {
             />
 
             {/* @ts-ignore */}
-            <View style={[styles.container, { minHeight: windowHeight ? windowHeight - 70 : "100vh" }]}>
-                <Text style={styles.title}>
-                    Encuentra y contrata de inmediato {"\n"} un servicio de limpieza confiable.
-                </Text>
+            <View style={[styles.container, { minHeight: windowHeight ? windowHeight : "100vh" }]}>
 
-                <View style={styles.inputsContainer}>
-                    <TextInput placeholder="Seleccionar ubicación" style={styles.input} />
-                    <TextInput placeholder="Ciudad" style={styles.input} />
-                </View>
-
-                <View style={styles.categoriesWrapper}>
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={styles.categoriesContainer}
-                    >
-                        {categories.map((cat) => (
-                            <TouchableOpacity
-                                key={cat.id}
-                                style={[
-                                    styles.categoryCard,
-                                    selected === cat.id && styles.categoryCardActive,
-                                ]}
-                                onPress={() => setSelected(cat.id)}
+                <View style={{ flexDirection: "row", alignItems: "center", height: "100%" }}>
+                    <View style={{ width: "50%", gap: 30, height: "100%", justifyContent: "center", paddingHorizontal: 90 }}>
+                        <Text
+                            style={{
+                                fontSize: 40,
+                                fontWeight: 700,
+                                color: "white",
+                            }}
+                        >
+                            Encuentra y contrata al instante servicios confiables para tu hogar o negocio
+                        </Text>
+                        <View style={{ gap: 10 }}>
+                            <Pressable
+                                onPress={handleOpenModal}
+                                style={{
+                                    paddingVertical: 10,
+                                    paddingLeft: 18,
+                                    backgroundColor: "white",
+                                    borderRadius: 12,
+                                    width: "75%"
+                                }}
                             >
-                                <ImageBackground
-                                    source={cat.path}
-                                    style={styles.categoryImage}
-                                    imageStyle={{ borderRadius: 12 }}
-                                    contentFit="cover"
-                                >
-                                    <View style={styles.overlay} />
-                                    <Text
-                                        style={[
-                                            styles.categoryText,
-                                            selected === cat.id && styles.categoryTextActive,
-                                        ]}
-                                    >
-                                        {cat.name}
-                                    </Text>
-                                </ImageBackground>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
+                                <Text style={{ opacity: .5, fontSize: 18, fontWeight: 500 }}>Seleccionar ubicación</Text>
+                            </Pressable>
+
+                            <Pressable
+                                onPress={handleOpenModal}
+                                style={{
+                                    paddingVertical: 10,
+                                    paddingLeft: 18,
+                                    backgroundColor: "white",
+                                    borderRadius: 12,
+                                    width: "75%"
+                                }}
+                            >
+                                <Text style={{ opacity: .5, fontSize: 18, fontWeight: 500 }}>Ciudad</Text>
+                            </Pressable>
+
+                            <Pressable
+                                onPress={handleOpenModal}
+                                style={{
+                                    paddingVertical: 10,
+                                    paddingLeft: 18,
+                                    backgroundColor: "white",
+                                    borderRadius: 12,
+                                    width: "75%"
+                                }}
+                            >
+                                <Text style={{ opacity: .5, fontSize: 18, fontWeight: 500 }}>Selecciona el servicio</Text>
+                            </Pressable>
+                        </View>
+
+                        <Pressable
+                            onPress={handleOpenModal}
+                            style={{
+                                paddingVertical: 10,
+                                paddingHorizontal: 30,
+                                borderRadius: 4,
+                                alignSelf: "flex-start",
+                                backgroundColor: "#FFA962",
+                                marginTop: 0
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    textAlign: "center",
+                                    color: "white",
+                                    fontWeight: 500,
+                                    fontSize: 18
+                                }}
+                            >
+                                CONTRATA AHORA
+                            </Text>
+                        </Pressable>
+
+                    </View>
+
+                    <View
+                        style={{
+                            width: "50%", height: "100%"
+                        }}
+                    >
+                        <Image
+                            source={require("@/assets/images/paco-home.png")}
+                            style={{
+                                width: "100%",
+                                height: "90%",
+                                marginTop: "auto"
+                            }}
+                            contentFit="contain"
+                        />
+                    </View>
                 </View>
             </View>
         </View>
@@ -81,13 +135,14 @@ const HeroSection = () => {
 
 const styles = StyleSheet.create({
     container: {
+        position: "relative",
         flex: 1,
         paddingHorizontal: 16,
         paddingVertical: 24,
+        paddingBottom: 0,
         gap: 30,
         justifyContent: "center",
-        marginTop: 70,
-        backgroundColor: "#50B4E8CC",
+        backgroundColor: "#0C85BEDD",
     },
     title: {
         fontSize: 34,

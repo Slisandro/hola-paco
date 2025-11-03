@@ -17,7 +17,7 @@ const Payment = () => {
     const router = useRouter();
     const handleGoBack = () => router.push("/(private)/(create-services)/create-service");
 
-    const [type, setType] = useState("boleta"); // boleta | factura
+    const [type, setType] = useState("factura"); // boleta | factura
     const [termsAccepted, setTermsAccepted] = useState(false);
 
     const handleAddService = () => {
@@ -45,10 +45,6 @@ const Payment = () => {
                 <View style={styles.viewContainer}>
                     <View style={styles.container}>
                         <View style={styles.row}>
-                            <Pressable style={styles.radio} onPress={() => setType("boleta")}>
-                                <View style={[styles.circle, type === "boleta" && styles.checked]} />
-                                <Text style={styles.radioLabel}>Boleta</Text>
-                            </Pressable>
                             <Pressable style={styles.radio} onPress={() => setType("factura")}>
                                 <View style={[styles.circle, type === "factura" && styles.checked]} />
                                 <Text style={styles.radioLabel}>Factura</Text>

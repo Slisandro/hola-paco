@@ -129,7 +129,28 @@ const ListItem = ({ item }: { item: any }) => {
     return (
         <View style={styles.card}>
             <View style={styles.topRow}>
-                <Image source={{ uri: item.image }} style={styles.avatar} />
+                {
+                    item.image
+                        ? <Image source={{ uri: item.image }} style={styles.avatar} />
+                        : <View
+                            style={[
+                                styles.avatar,
+                                { backgroundColor: "#FFC356CC", alignItems: "center", justifyContent: "center" },
+                            ]}
+                        >
+                            <Text
+                                style={{
+                                    textAlign: "center",
+                                    lineHeight: 40,
+                                    fontSize: 20,
+                                    fontWeight: "bold",
+                                    color: "#000",
+                                }}
+                            >
+                                {item.name[0]}
+                            </Text>
+                        </View>
+                }
                 <View style={{ flex: 1 }}>
                     <Text style={styles.name}>{item.title}</Text>
                     <View style={styles.locationWrapper}>

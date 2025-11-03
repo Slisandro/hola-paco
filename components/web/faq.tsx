@@ -26,41 +26,89 @@ const FAQItem = ({ item }: { item: any }) => {
 export default function FAQSection() {
     return (
         <View style={styles.container}>
-
-            <View style={styles.content}>
-                <Text style={styles.title}>PREGUNTAS FRECUENTES</Text>
-                <Text style={styles.subtitle}>
-                    OBTENGA RESPUESTAS A PREGUNTAS FRECUENTES SOBRE NUESTRA APLICACIÓN
-                </Text>
-                <View style={styles.faqList}>
-                    {faqs.map((item, index) => (
-                        <FAQItem key={index} item={item} />
-                    ))}
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>VER TODAS LAS FAQ</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
-
             <Image
-                source={require("@/assets/images/service-info.png")}
-                style={styles.image}
+                source={require("@/assets/images/paco-home.png")}
+                style={{
+                    width: "50%",
+                    height: "100%",
+                    marginTop: "auto",
+                    transform: [{ rotateY: "180deg" }]
+                }}
                 contentFit="contain"
             />
+            <View
+                style={{
+                    width: "40%",
+                    height: "90%",
+                }}>
+                <Text
+                    style={{
+                        fontSize: 13,
+                        fontWeight: 400,
+                        color: "#737373"
+                    }}>
+                    PREGUNTAS FRECUENTES
+                </Text>
+                <Text
+                    style={{
+                        fontSize: 28,
+                        fontWeight: 700,
+                        color: "#000000",
+                        width: "100%"
+                    }}>
+                    Obtenga respuestas a preguntas frecuentes sobre nuestra aplicación
+                </Text>
+
+                <View style={styles.faqList}>
+                    {faqs.map(faq => (
+                        <FAQItem item={faq} />
+                    ))}
+                </View>
+
+
+                <TouchableOpacity style={styles.boton}>
+                    <Text
+                        style={[
+                            styles.texto,
+                            { fontWeight: 700, color: "white" }
+                        ]}
+                    >
+                        VER TODOS LOS SERVICIOS
+                    </Text>
+
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    texto: {
+        fontSize: 12,
+        color: "#333",
+        fontWeight: "500",
+        textAlign: "center",
+    },
+    boton: {
+        // marginTop: 30,
+        backgroundColor: "#0077B6",
+        color: "#fff",
+        fontWeight: "700",
+        textTransform: "uppercase",
+        fontSize: 12,
+        paddingVertical: 12,
+        paddingHorizontal: 28,
+        borderRadius: 8,
+    },
     container: {
         paddingVertical: 20,
+        paddingBottom: 0,
         paddingHorizontal: 40,
         backgroundColor: '#fff',
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        height
+        height: height * .9
     },
     content: {
         width: '50%',
@@ -77,14 +125,15 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     faqList: {
-        flex: 1,
+        // flex: 1,
         marginRight: 10,
+        marginTop: 20
     },
     faqItem: {
         marginBottom: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#eee',
-        paddingBottom: 5,
+        padding: 15
     },
     question: {
         fontWeight: '600',
