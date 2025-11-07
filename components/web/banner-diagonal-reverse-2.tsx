@@ -49,7 +49,7 @@ export default function BannerDiagonalReverse2() {
                     style={[
                         styles.textContainer,
                         {
-                            marginLeft: isMobile ? "10%" : isTablet ? "15%" : "20%",
+                            marginLeft: isMobile ? "10%" : isTablet ? "15%" : "0%",
                             width: isMobile ? "80%" : isTablet ? "60%" : "50%",
                         },
                     ]}
@@ -58,10 +58,12 @@ export default function BannerDiagonalReverse2() {
                         style={[
                             styles.title,
                             {
-                                fontSize: isMobile ? 15 : isTablet ? 18 : 20,
+                                fontSize: isMobile ? 15 : isTablet ? 18 : 26,
                                 lineHeight: isMobile ? 22 : isTablet ? 26 : 28,
-                                textAlign: isMobile ? "center" : "left",
-                                maxWidth: isMobile ? "100%" : 420,
+                                textAlign: "center",
+                                maxWidth: "100%",
+                                marginLeft: "auto",
+                                textTransform: "uppercase"
                             },
                         ]}
                     >
@@ -75,13 +77,18 @@ export default function BannerDiagonalReverse2() {
                                 alignSelf: isMobile ? "center" : "flex-start",
                                 paddingHorizontal: isMobile ? 14 : 20,
                                 paddingVertical: isMobile ? 8 : 10,
+                                marginTop: 20,
+                                marginHorizontal: "auto"
                             },
                         ]}
                     >
                         <Text
                             style={[
                                 styles.buttonText,
-                                { fontSize: isMobile ? 12 : 13 },
+                                {
+                                    fontSize: isMobile ? 12 : 20,
+                                    textTransform: "uppercase",
+                                },
                             ]}
                         >
                             Reservar tu servicio ahora
@@ -125,7 +132,7 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
     textContainer: {
-        flex: 1,
+        flex: .5,
     },
     title: {
         color: "#fff",

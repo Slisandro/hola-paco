@@ -1,5 +1,13 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 export default function BannerDiagonal() {
   const screenWidth = Dimensions.get("window").width;
@@ -13,16 +21,26 @@ export default function BannerDiagonal() {
 
   return (
     <View style={[styles.container, { height: bannerHeight }]}>
-      {/* Fondos diagonales */}
-      <View style={styles.orangeBg} />
-      <View
+      {/* Fondo degradado naranja */}
+      <LinearGradient
+        colors={["#FFB87A", "#FF8C42"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.orangeBg}
+      />
+
+      {/* Fondo degradado azul en diagonal */}
+      <LinearGradient
+        colors={["#004F8A", "#007ACC"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
         style={[
           styles.blueBg,
           { transform: [{ skewX: isMobile ? "10deg" : "15deg" }] },
         ]}
       />
 
-      {/* Contenido principal */}
+      {/* Contenido */}
       <View
         style={[
           styles.content,
@@ -48,9 +66,11 @@ export default function BannerDiagonal() {
           style={[
             styles.textContainer,
             {
-              marginLeft: isMobile ? "35%" : isTablet ? "32%" : "30%",
-              width: isMobile ? "60%" : isTablet ? "55%" : "50%",
-              alignItems: isMobile ? "center" : "flex-start",
+              alignItems: "center",
+              justifyContent: "center",
+              width: isMobile ? "90%" : isTablet ? "70%" : "60%",
+              marginLeft: isMobile ? "auto" : "auto",
+              marginRight: isMobile ? "auto" : "auto",
             },
           ]}
         >
@@ -58,10 +78,11 @@ export default function BannerDiagonal() {
             style={[
               styles.title,
               {
-                fontSize: isMobile ? 16 : isTablet ? 18 : 22,
+                fontSize: isMobile ? 16 : isTablet ? 18 : 26,
                 lineHeight: isMobile ? 22 : isTablet ? 26 : 30,
-                textAlign: isMobile ? "center" : "left",
-                maxWidth: isMobile ? "100%" : 420,
+                textAlign: "center",
+                maxWidth: "90%",
+                textTransform: "uppercase",
               },
             ]}
           >
@@ -73,16 +94,20 @@ export default function BannerDiagonal() {
             style={[
               styles.button,
               {
-                alignSelf: isMobile ? "center" : "flex-start",
+                alignSelf: "center",
                 paddingHorizontal: isMobile ? 14 : 20,
                 paddingVertical: isMobile ? 8 : 10,
+                marginTop: 20,
               },
             ]}
           >
             <Text
               style={[
                 styles.buttonText,
-                { fontSize: isMobile ? 12 : 13 },
+                {
+                  fontSize: isMobile ? 12 : 20,
+                  textTransform: "uppercase",
+                },
               ]}
             >
               AGENDA TU SERVICIO AHORA
@@ -104,18 +129,16 @@ const styles = StyleSheet.create({
   },
   orangeBg: {
     flex: 1,
-    backgroundColor: "#FF9E5E",
   },
   blueBg: {
     flex: 1.8,
-    backgroundColor: "#007ACC",
     marginLeft: -120,
   },
   content: {
     position: "absolute",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     width: "100%",
     height: "100%",
     zIndex: 10,
@@ -126,7 +149,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   textContainer: {
-    flex: 1,
+    zIndex: 11,
   },
   title: {
     color: "#fff",

@@ -523,6 +523,27 @@ const styles = StyleSheet.create({
 
 function FeaturesSection2() {
   const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
+  const screenWidth = Dimensions.get("window").width;
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
+  React.useEffect(() => {
+    const { width, height } = Dimensions.get("window");
+    setWindowSize({ width, height });
+
+    const handleResize = () => {
+      const { width, height } = Dimensions.get("window");
+      setWindowSize({ width, height });
+    };
+
+    if (Platform.OS === "web") {
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
+  // Breakpoint example
+  const isSmallScreen = windowSize.width < 768;
+  const isTablet = screenWidth >= 600 && screenWidth < 1024;
 
   React.useEffect(() => {
     const { height } = Dimensions.get("window");
@@ -537,13 +558,39 @@ function FeaturesSection2() {
         { minHeight: windowHeight ? windowHeight * 0.7 : "70vh" },
       ]}
     >
-      <View style={{ marginTop: 30, gap: 20 }}>
+      <View style={{ marginVertical: 30, gap: 20 }}>
         <Text
-          style={[stylesFeatureSection2.heading, { fontSize: 28, color: "#000000" }]}
+          style={[stylesFeatureSection2.heading, { textTransform: "none", fontSize: isSmallScreen ? 24 : 36, color: "#000000" }]}
         >
           ¿Cómo funciona?
         </Text>
         <FeatureCards />
+
+        <Pressable
+          style={[
+            stylesFeature.button,
+            {
+              alignSelf: isSmallScreen ? "center" : "flex-start",
+              paddingHorizontal: isSmallScreen ? 14 : 28,
+              paddingVertical: isSmallScreen ? 8 : 16,
+              marginHorizontal: "auto"
+            },
+          ]}
+        >
+          <Text
+            style={[
+              stylesFeature.buttonText,
+              {
+                fontSize: isSmallScreen ? 12 : 20,
+                color: "#fff",
+                fontWeight: "700",
+                textAlign: "center",
+              },
+            ]}
+          >
+            AGENDA TU SERVICIO AHORA
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -553,18 +600,21 @@ function FeatureCards() {
   const features = [
     {
       id: 1,
-      title: "SOLICITA TU SERVICIO",
-      description: "Introduce lo que quieres limpiar o servicio a solicitar.",
+      title: "Busca lo que necesitas",
+      description: "Encuentra todo tipo de servicio a domicilio, limpieza de tapicería, fontanería, electricidad, mudanzas, carpintería, jardinería y mucho más.",
+      icon: require("@/assets/images/homepage/step1.png")
     },
     {
       id: 2,
-      title: "HABLA CON LOS EXPERTOS",
-      description: "Compara por precio, valoraciones y comentarios de los clientes.",
+      title: "Habla con el profesional y revisa su valoración",
+      description: "Chatea directamente con el profesional antes de contratar, resuelve dudas y consulta sus otras calificaciones.",
+      icon: require("@/assets/images/homepage/step2.png")
     },
     {
       id: 3,
-      title: "CONTRATA AL MEJOR",
-      description: "El profesional contratado llegará puntual a la hora seleccionada.",
+      title: "Reserva con confianza y paga al finalizar",
+      description: "Elige día y hora, confirma tu servicio y recibe un profesional verificado en tu domicilio. Sólo pagas cuando el trabajo esté terminado, sin riesgo.",
+      icon: require("@/assets/images/homepage/step3.png")
     },
   ];
 
@@ -573,7 +623,7 @@ function FeatureCards() {
       {features.map((item) => (
         <View key={item.id} style={stylesFeature.card}>
           <View style={stylesFeature.iconCircle}>
-            <Text style={stylesFeature.iconText}>{item.id}</Text>
+            <Image source={item.icon} style={stylesFeature.icon} contentFit="contain" />
           </View>
 
           {/* Si preferís usar imágenes, descomentá esto y comentá el círculo de arriba */}
@@ -594,7 +644,7 @@ const stylesFeature = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     gap: 24,
-    paddingVertical: 30,
+    // paddingVertical: 30,
     paddingHorizontal: 16,
     width: "100%",
   },
@@ -602,6 +652,7 @@ const stylesFeature = StyleSheet.create({
     width: "90%",
     maxWidth: 280,
     alignItems: "center",
+    justifyContent: "space-between",
     textAlign: "center",
     backgroundColor: "#FFF",
     borderRadius: 16,
@@ -612,24 +663,23 @@ const stylesFeature = StyleSheet.create({
     paddingVertical: 25,
     paddingHorizontal: 20,
     gap: 10,
+    minHeight: 250
   },
   iconCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: "#FFA962",
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
   },
   iconText: {
     color: "#000",
-    fontWeight: "800",
+    fontWeight: 700,
     fontSize: 22,
+    borderRadius: 15
   },
   icon: {
-    width: 80,
-    height: 80,
+    width: 120,
+    height: 120,
     marginBottom: 12,
     tintColor: "#FF9E5E",
   },
@@ -647,6 +697,16 @@ const stylesFeature = StyleSheet.create({
     color: "#555",
     fontSize: 13,
     lineHeight: 18,
+  },
+
+  button: {
+    backgroundColor: "#FFB87A",
+    marginTop: 14,
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "700",
   },
 });
 
@@ -842,10 +902,10 @@ const stylesServicios = StyleSheet.create({
     borderRadius: 8,
   },
   botonTexto: {
+    fontSize: 20,
     color: "#fff",
     fontWeight: "700",
-    textTransform: "uppercase",
-    fontSize: 12,
+    textAlign: "center",
   },
 });
 

@@ -72,9 +72,22 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                                 fontWeight: 700,
                                 color: "white",
                                 textAlign: isSmallScreen ? "center" : "left",
+                                width: isSmallScreen ? "100%" : "80%"
                             }}
                         >
-                            Encuentra y contrata al instante servicios confiables para tu hogar o negocio
+                            Servicios a domicilio fáciles, rápidos y de confianza
+                        </Text>
+
+                        <Text
+                            style={{
+                                fontSize: isSmallScreen ? 24 : 28,
+                                fontWeight: 600,
+                                color: "white",
+                                textAlign: isSmallScreen ? "center" : "left",
+                                width: isSmallScreen ? "100%" : "80%"
+                            }}
+                        >
+                            Encuentra y contrata en segundos limpieza, fontanería, electricidad, carpintería y mucho más en tu ciudad
                         </Text>
 
                         <View

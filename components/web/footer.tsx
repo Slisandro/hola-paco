@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         color: "#0C85BE",
     },
     link: {
-        fontSize: 10,
+        fontSize: 12,
         marginBottom: 4,
         color: COLORS.text,
     },

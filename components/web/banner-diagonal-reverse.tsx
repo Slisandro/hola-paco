@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -10,15 +11,33 @@ export default function BannerDiagonalReverse() {
 
     // Altura adaptable
     const bannerHeight = isMobile ? 220 : isTablet ? 260 : 220;
-    
+
     return (
         <View style={[styles.container, { height: bannerHeight }]}>
-            {/* Fondos diagonales */}
-            <View style={styles.orangeBg} />
-            <View style={[styles.blueBg, { transform: [{ skewX: isMobile ? "-10deg" : "-15deg" }] }]} />
+            <LinearGradient
+                colors={["#007ACC", "#004F8A"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.orangeBg}
+            />
+
+            <LinearGradient
+                colors={["#FFB87A", "#FF8C42"]}
+                start={{ x: 1, y: 0 }}
+                end={{ x: 0, y: 1 }}
+                style={[
+                    styles.blueBg,
+                    { transform: [{ skewX: isMobile ? "-10deg" : "-15deg" }] },
+                ]}
+            />
 
             {/* Contenido */}
-            <View style={[styles.content, { paddingHorizontal: isMobile ? 20 : isTablet ? 40 : 80 }]}>
+            <View
+                style={[
+                    styles.content,
+                    { paddingHorizontal: isMobile ? 20 : isTablet ? 40 : 80 },
+                ]}
+            >
                 {/* Imagen del personaje */}
                 <Image
                     source={require("@/assets/images/homepage/paco-download.png")}
@@ -47,14 +66,16 @@ export default function BannerDiagonalReverse() {
                         style={[
                             styles.title,
                             {
-                                fontSize: isMobile ? 16 : isTablet ? 10 : 22,
+                                fontSize: isMobile ? 16 : isTablet ? 18 : 26,
                                 lineHeight: isMobile ? 22 : isTablet ? 26 : 30,
-                                textAlign: isMobile ? "center" : "left",
-                                maxWidth: isMobile ? "100%" : 420,
+                                textAlign: isMobile ? "center" : "center",
+                                maxWidth: isMobile ? "100%" : "75%",
+                                marginHorizontal: "auto",
+                                textTransform: "uppercase"
                             },
                         ]}
                     >
-                        Descarga la app y vive la experiencia de un hogar impecable
+                        DESCARGA LA APP Y VIVE LA EXPERIENCIA DE UN HOGAR IMPECABLE
                     </Text>
 
                     <Pressable
@@ -68,10 +89,17 @@ export default function BannerDiagonalReverse() {
                         ]}
                     >
                         <Text
-                            style={[
-                                styles.buttonText,
-                                { fontSize: isMobile ? 12 : 13 },
-                            ]}
+                            style={
+                                [
+                                    styles.buttonText,
+                                    {
+                                        fontSize: isMobile ? 12 : 20,
+                                        textTransform: "uppercase",
+                                        marginTop: 20,
+                                        marginHorizontal: "auto"
+                                    }
+                                ]
+                            }
                         >
                             AGENDA TU SERVICIO AHORA
                         </Text>
@@ -88,15 +116,13 @@ const styles = StyleSheet.create({
         width: "100%",
         overflow: "visible",
         flexDirection: "row",
-        backgroundColor: "#FF9E5E",
+        backgroundColor: "#FFB87A",
     },
     orangeBg: {
         flex: 1,
-        backgroundColor: "#007ACC",
     },
     blueBg: {
         flex: 0.3,
-        backgroundColor: "#FF9E5E",
         marginLeft: -50,
     },
     content: {

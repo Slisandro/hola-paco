@@ -75,7 +75,7 @@ export default function FAQSection() {
 
 const styles = StyleSheet.create({
     texto: {
-        fontSize: 12,
+        fontSize: 20,
         color: "#fff",
         fontWeight: "700",
         textAlign: "center",
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         gap: 20,
+        paddingBottom: 0
     },
     content: {
         justifyContent: "center",
