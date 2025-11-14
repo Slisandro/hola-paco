@@ -1,4 +1,5 @@
 import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -9,15 +10,25 @@ export default function BannerDiagonalReverse2() {
     const isMobile = screenWidth < 600;
     const isTablet = screenWidth >= 600 && screenWidth < 1024;
 
-    const bannerHeight = isMobile ? 220 : isTablet ? 260 : 220;
+    const bannerHeight = isMobile ? 260 : isTablet ? 300 : 260;
 
     return (
         <View style={[styles.container, { height: bannerHeight }]}>
-            {/* Fondos diagonales */}
-            <View style={styles.orangeBg} />
-            <View
+            {/* LEFT: gradiente azul */}
+            <LinearGradient
+                colors={["#007ACC", "#004F8A"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.blueBg}
+            />
+
+            {/* RIGHT: gradiente naranja con diagonal */}
+            <LinearGradient
+                colors={["#FFB87A", "#FF8C42"]}
+                start={{ x: 1, y: 0 }}
+                end={{ x: 0, y: 1 }}
                 style={[
-                    styles.blueBg,
+                    styles.orangeBg,
                     { transform: [{ skewX: isMobile ? "-10deg" : "-15deg" }] },
                 ]}
             />
@@ -26,31 +37,17 @@ export default function BannerDiagonalReverse2() {
             <View
                 style={[
                     styles.content,
-                    { paddingHorizontal: isMobile ? 20 : isTablet ? 40 : 60 },
+                    { paddingHorizontal: isMobile ? 20 : isTablet ? 40 : 80 },
                 ]}
             >
-                {/* Imagen del personaje */}
-                <Image
-                    source={require("@/assets/images/homepage/paco-download.png")}
-                    style={[
-                        styles.image,
-                        {
-                            width: isMobile ? 140 : isTablet ? 200 : 260,
-                            height: isMobile ? 140 : isTablet ? 200 : 260,
-                            right: isMobile ? 80 : isTablet ? 200 : 300,
-                            bottom: isMobile ? -20 : 0,
-                        },
-                    ]}
-                    contentFit="contain"
-                />
-
-                {/* Texto */}
+                {/* TEXTO PRIMERO */}
                 <View
                     style={[
                         styles.textContainer,
                         {
-                            marginLeft: isMobile ? "10%" : isTablet ? "15%" : "0%",
-                            width: isMobile ? "80%" : isTablet ? "60%" : "50%",
+                            width: isMobile ? "90%" : isTablet ? "55%" : "50%",
+                            alignItems: isMobile ? "center" : "flex-start",
+                            marginRight: isMobile ? "4%" : "6%",
                         },
                     ]}
                 >
@@ -58,16 +55,15 @@ export default function BannerDiagonalReverse2() {
                         style={[
                             styles.title,
                             {
-                                fontSize: isMobile ? 15 : isTablet ? 18 : 26,
-                                lineHeight: isMobile ? 22 : isTablet ? 26 : 28,
-                                textAlign: "center",
-                                maxWidth: "100%",
-                                marginLeft: "auto",
-                                textTransform: "uppercase"
+                                fontSize: isMobile ? 16 : isTablet ? 18 : 26,
+                                lineHeight: isMobile ? 22 : isTablet ? 26 : 30,
+                                textAlign: isMobile ? "center" : "left",
+                                maxWidth: isMobile ? "100%" : "80%",
+                                textTransform: "uppercase",
                             },
                         ]}
                     >
-                        Descarga la app y vive la experiencia de un hogar impecable sin preocupaciones.
+                        DESCARGA LA APP Y VIVE LA EXPERIENCIA DE UN HOGAR IMPECABLE SIN PREOCUPACIONES.
                     </Text>
 
                     <Pressable
@@ -77,8 +73,6 @@ export default function BannerDiagonalReverse2() {
                                 alignSelf: isMobile ? "center" : "flex-start",
                                 paddingHorizontal: isMobile ? 14 : 20,
                                 paddingVertical: isMobile ? 8 : 10,
-                                marginTop: 20,
-                                marginHorizontal: "auto"
                             },
                         ]}
                     >
@@ -86,15 +80,31 @@ export default function BannerDiagonalReverse2() {
                             style={[
                                 styles.buttonText,
                                 {
-                                    fontSize: isMobile ? 12 : 20,
+                                    fontSize: isMobile ? 12 : 16,
                                     textTransform: "uppercase",
+                                    color: "white",
+                                    margin: 4,
                                 },
                             ]}
                         >
-                            Reservar tu servicio ahora
+                            RESERVAR TU SERVICIO AHORA
                         </Text>
                     </Pressable>
                 </View>
+
+                {/* IMAGEN DESPUÉS */}
+                <Image
+                    source={require("@/assets/images/homepage/paco-download.png")}
+                    style={[
+                        styles.image,
+                        {
+                            width: isMobile ? 140 : isTablet ? 200 : 260,
+                            height: isMobile ? 140 : isTablet ? 200 : 260,
+                            right: isMobile ? -10 : "10%",
+                            // bottom: isMobile ? -16 : -10,
+                        },
+                    ]}
+                />
             </View>
         </View>
     );
@@ -106,46 +116,52 @@ const styles = StyleSheet.create({
         width: "100%",
         overflow: "visible",
         flexDirection: "row",
-        backgroundColor: "#FF9E5E",
+        backgroundColor: "#FFB87A",
     },
-    orangeBg: {
-        flex: 1,
-        backgroundColor: "#007ACC",
-    },
+
     blueBg: {
-        flex: 0.3,
-        backgroundColor: "#FF9E5E",
-        marginLeft: -50,
+        flex: 1.0,
     },
+
+    orangeBg: {
+        flex: 0.45,
+        marginLeft: -60,
+    },
+
     content: {
         position: "absolute",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "flex-start",
+        justifyContent: "space-between",
         width: "100%",
         height: "100%",
         zIndex: 10,
     },
+
     image: {
         position: "absolute",
-        zIndex: 10,
+        zIndex: 20,
         resizeMode: "contain",
+        elevation: 6,
     },
+
     textContainer: {
-        flex: .5,
+        zIndex: 30,
     },
+
     title: {
         color: "#fff",
-        fontWeight: "700",
-        textTransform: "uppercase",
+        fontWeight: "800",
     },
+
     button: {
         backgroundColor: "#FFB87A",
         marginTop: 14,
-        borderRadius: 6,
+        borderRadius: 8,
     },
+
     buttonText: {
-        color: "#fff",
-        fontWeight: "700",
+        color: "#0B1A2A",
+        fontWeight: "800",
     },
 });

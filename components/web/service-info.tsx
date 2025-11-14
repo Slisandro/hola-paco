@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const ServiceInfo = () => {
     const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
@@ -20,36 +20,105 @@ const ServiceInfo = () => {
         >
             <View style={{ marginTop: 30, gap: 20 }}>
                 <Text style={[styles.heading, { fontSize: 28, color: "#000000" }]}>
-                    ¿Por qué elegir nuestros servicios?
+                    ¿Por qué Hola Paco?
                 </Text>
                 <FeaturesSection />
             </View>
+
+            <TouchableOpacity style={stylesServicios.boton} activeOpacity={0.85}>
+                <Text style={stylesServicios.botonTexto}>Encuentra tu servicio</Text>
+            </TouchableOpacity>
         </View>
     );
 };
+
+
+const stylesServicios = StyleSheet.create({
+    container: {
+        backgroundColor: "#fff",
+        paddingHorizontal: 20,
+        alignItems: "center",
+        gap: 20,
+    },
+    titulo: {
+        fontSize: 20,
+        fontWeight: "700",
+        marginBottom: 30,
+        textAlign: "center",
+        color: "#333",
+    },
+    lista: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        maxWidth: 900,
+        flexWrap: "wrap",
+    },
+    card: {
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: "#DDD",
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 8,
+        elevation: 2, // sombra sutil
+    },
+    cardActivo: {
+        backgroundColor: "#FFA858",
+        borderColor: "#50B4E8",
+        elevation: 5, // más sombra cuando está activo
+    },
+    icono: {
+        width: 50,
+        height: 50,
+        marginBottom: 6,
+    },
+    texto: {
+        fontSize: 12,
+        color: "#333",
+        fontWeight: "500",
+        textAlign: "center",
+    },
+    textoActivo: {
+        color: "#fff",
+    },
+    boton: {
+        backgroundColor: "#0077B6",
+        paddingVertical: 12,
+        paddingHorizontal: 28,
+        borderRadius: 8,
+    },
+    botonTexto: {
+        fontSize: 20,
+        color: "#fff",
+        fontWeight: "700",
+        textAlign: "center",
+    },
+});
 
 function FeaturesSection() {
     const features = [
         {
             id: 1,
             icon: require("@/assets/images/homepage/guard.png"),
-            title: "VERIFICADO Y SEGURO",
+            title: "Servicios profesionales de confianza y verificados",
             description:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                "Expertos comprobados, responsables y listos para ayudarte en lo que necesites",
         },
         {
             id: 2,
             icon: require("@/assets/images/homepage/click.png"),
-            title: "FÁCIL Y RÁPIDO",
+            title: "Garantía en cada servicio",
             description:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                "Tu tranquilidad está asegurada: cada servicio cuenta con respaldo y compromiso",
         },
         {
             id: 3,
             icon: require("@/assets/images/homepage/files.png"),
-            title: "CONTROL DE GASTOS",
+            title: "Pago al finalizar",
             description:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                "Olvídate de sorpresas: Paga sólo cuando el trabajo este terminado y estés satisfecho",
         },
     ];
 
@@ -78,8 +147,8 @@ const stylesFeature = StyleSheet.create({
         width: "100%",
     },
     card: {
-        width: "90%", // ✅ móvil
-        maxWidth: 280, // ✅ web (no más de 280px)
+        width: "100%", // ✅ móvil
+        maxWidth: 300, // ✅ web (no más de 280px)
         alignItems: "center",
         textAlign: "center",
         backgroundColor: "#FFF",
@@ -103,7 +172,7 @@ const stylesFeature = StyleSheet.create({
         textAlign: "center",
         color: "#000",
         marginVertical: 8,
-        fontSize: 18,
+        fontSize: 20,
     },
     description: {
         fontWeight: "400",
@@ -127,8 +196,9 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        gap: 40,
+        // gap: 40,
         padding: 20,
+        marginBottom: 40
     },
 });
 

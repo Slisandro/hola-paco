@@ -440,87 +440,6 @@ function Splash() {
   );
 }
 
-const stylesBannerReverse = StyleSheet.create({
-  container: {
-    position: "relative",
-    width: "100%",
-    height: 200,
-    overflow: "visible",
-    flexDirection: "row",
-    backgroundColor: "#FF9E5E",
-  },
-  orangeBg: {
-    flex: 1,
-    backgroundColor: "#007ACC",
-  },
-  blueBg: {
-    flex: .3,
-    backgroundColor: "#FF9E5E",
-    transform: [{ skewX: "-15deg" }],
-    marginLeft: -50,
-  },
-  content: {
-    position: "absolute",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    width: "100%",
-    height: "100%",
-    paddingHorizontal: 50,
-    zIndex: 100,
-  },
-  image: {
-    position: "absolute",
-    zIndex: 10,
-    resizeMode: "contain",
-  },
-  textContainer: {
-    flex: 1,
-    marginLeft: "20%",
-    width: "50%",
-  },
-  title: {
-    color: "#fff",
-    fontWeight: "700",
-    fontSize: 18,
-    lineHeight: 24,
-    maxWidth: 400,
-    textTransform: "uppercase"
-  },
-  button: {
-    backgroundColor: "#FFB87A",
-    marginTop: 14,
-    alignSelf: "flex-start",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 6,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "700",
-    fontSize: 13,
-  },
-});
-
-const styles = StyleSheet.create({
-  heading: {
-    marginHorizontal: "auto",
-    fontFamily: "DM Sans",
-    fontWeight: "700",
-    fontSize: 20,
-    color: "white",
-    textAlign: "center"
-  },
-  section: {
-    backgroundColor: "white",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 40,
-    padding: 20,
-  },
-})
-
 function FeaturesSection2() {
   const [windowHeight, setWindowHeight] = React.useState<number | null>(null);
   const screenWidth = Dimensions.get("window").width;
@@ -566,6 +485,21 @@ function FeaturesSection2() {
         </Text>
         <FeatureCards />
 
+        <Text
+          style={[
+            stylesFeature.buttonText,
+            {
+              marginTop: 10,
+              fontSize: isSmallScreen ? 12 : 24,
+              fontWeight: "700",
+              textAlign: "center",
+              color: "#000000"
+            },
+          ]}
+        >
+          ¿Listo para probar Hola Paco?
+        </Text>
+
         <Pressable
           style={[
             stylesFeature.button,
@@ -588,7 +522,7 @@ function FeaturesSection2() {
               },
             ]}
           >
-            AGENDA TU SERVICIO AHORA
+            Reserva tu servicio ahora
           </Text>
         </Pressable>
       </View>
@@ -644,8 +578,8 @@ const stylesFeature = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     gap: 24,
-    // paddingVertical: 30,
     paddingHorizontal: 16,
+    height: 350,
     width: "100%",
   },
   card: {
@@ -663,7 +597,7 @@ const stylesFeature = StyleSheet.create({
     paddingVertical: 25,
     paddingHorizontal: 20,
     gap: 10,
-    minHeight: 250
+    height: "100%"
   },
   iconCircle: {
     borderRadius: 15,
@@ -731,16 +665,7 @@ const stylesFeatureSection2 = StyleSheet.create({
 
 const servicios = [
   {
-    id: 1,
-    label: "Fontanería",
-    value: "fontaneria",
-    nombre: "Fontanería",
-    icono: require("@/assets/icons/services/fontaneria.png"),
-    iconoSelected: require("@/assets/icons/services/fontaneria_selected.png"),
-    path: "/(web)/fontaneria"
-  },
-  {
-    id: 2,
+    id: 0,
     label: "Limpieza",
     value: "limpieza",
     nombre: "Limpieza",
@@ -749,7 +674,16 @@ const servicios = [
     path: "/(web)/limpieza"
   },
   {
-    id: 3,
+    id: 1,
+    label: "Cerrajería",
+    value: "cerrajería",
+    nombre: "Cerrajería",
+    icono: require("@/assets/icons/services/electricista.png"),
+    iconoSelected: require("@/assets/icons/services/electricista_selected.png"),
+    path: "/(web)/services/fontaneria"
+  },
+  {
+    id: 2,
     label: "Electricista",
     value: "electricista",
     nombre: "Electricista",
@@ -758,37 +692,37 @@ const servicios = [
     path: "/(web)/services/fontaneria"
   },
   {
+    id: 3,
+    label: "Masajista",
+    value: "fontaneria",
+    nombre: "Masajista",
+    icono: require("@/assets/icons/services/fontaneria.png"),
+    iconoSelected: require("@/assets/icons/services/fontaneria_selected.png"),
+    path: "/(web)/fontaneria"
+  },
+  {
     id: 4,
-    label: "Jardinería",
-    value: "jardineria",
-    nombre: "Jardinería",
-    icono: require("@/assets/icons/services/jardineria.png"),
-    iconoSelected: require("@/assets/icons/services/jardineria_selected.png"),
-    path: "/(web)/jardineria"
+    label: "Clases de refuerzo",
+    value: "limpieza",
+    nombre: "Clases de refuerzo",
+    icono: require("@/assets/icons/services/limpieza.png"),
+    iconoSelected: require("@/assets/icons/services/limpieza_selected.png"),
+    path: "/(web)/limpieza"
   },
   {
-    id: 5,
-    label: "Montaje",
-    value: "montaje",
-    nombre: "Montaje",
-    icono: require("@/assets/icons/services/montaje.png"),
-    iconoSelected: require("@/assets/icons/services/montaje_selected.png"),
+    id: 3,
+    label: "Limpieza de tapicería",
+    value: "electricista",
+    nombre: "Limpieza de tapicería",
+    icono: require("@/assets/icons/services/electricista.png"),
+    iconoSelected: require("@/assets/icons/services/electricista_selected.png"),
     path: "/(web)/services/fontaneria"
-  },
-  {
-    id: 6,
-    label: "Carpintería",
-    value: "carpinteria",
-    nombre: "Carpintería",
-    icono: require("@/assets/icons/services/carpinteria.png"),
-    iconoSelected: require("@/assets/icons/services/carpinteria_selected.png"),
-    path: "/(web)/services/fontaneria"
-  },
+  }
 ];
 
 function Servicios() {
   const router = useRouter()
-  const [seleccionado, setSeleccionado] = useState(1);
+  const [seleccionado, setSeleccionado] = useState(0);
   const screenWidth = Dimensions.get("window").width;
 
   const isMobile = screenWidth < 600;
@@ -796,18 +730,23 @@ function Servicios() {
 
   return (
     <View style={[stylesServicios.container, { paddingVertical: isMobile ? 60 : 120 }]}>
-      <Text style={stylesServicios.titulo}>LOS MÁS SELECCIONADOS</Text>
+      <Text
+        style={[stylesFeatureSection2.heading, { textTransform: "none", fontSize: isMobile ? 24 : 36, color: "#000000" }]}
+      >Los más populares de tu zona</Text>
+      <Text style={[stylesServicios.titulo, { fontSize: 16, fontWeight: 600 }]}>Descubre los servicios más solicitados por tus vecinos en Hola Paco</Text>
 
       <View
         style={[
           stylesServicios.lista,
           {
-            flexWrap: isMobile ? "wrap" : "nowrap",
-            gap: isMobile ? 16 : 20,
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            columnGap: 20,
+            rowGap: 20,
           },
-        ]}
-      >
-        {servicios.map((item) => {
+        ]}>
+        {servicios.map((item, index) => {
           const activo = item.id === seleccionado;
           return (
             <TouchableOpacity
@@ -815,15 +754,22 @@ function Servicios() {
               style={[
                 stylesServicios.card,
                 activo && stylesServicios.cardActivo,
-                { width: isMobile ? 100 : 120, height: isMobile ? 100 : 120 },
+                {
+                  width: "32%",
+                  aspectRatio: 1, // cuadrado perfecto
+                  maxWidth: "25%",  // opcional
+                  position: "relative"
+                },
               ]}
-              onPress={() => {
-                // setSeleccionado(item.id)
-                // @ts-expect-error
-                router.push(item.path)
-              }}
+              // @ts-expect-error
+              onPress={() => router.push(item.path)}
               activeOpacity={0.8}
             >
+              {index === 0 && (
+                <View style={{ position: "absolute", top: 0, left: 0, padding: 4, borderRadius: 6, backgroundColor: "#007ACC" }}>
+                  <Text style={{ color: "white", fontSize: 12 }}>Más demandado</Text>
+                </View>
+              )}
               <Image
                 source={activo ? item.iconoSelected : item.icono}
                 style={stylesServicios.icono}
@@ -838,7 +784,7 @@ function Servicios() {
       </View>
 
       <TouchableOpacity style={stylesServicios.boton} activeOpacity={0.85}>
-        <Text style={stylesServicios.botonTexto}>VER TODOS LOS SERVICIOS</Text>
+        <Text style={stylesServicios.botonTexto}>Reservar ahora</Text>
       </TouchableOpacity>
     </View>
   );

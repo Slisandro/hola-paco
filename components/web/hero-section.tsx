@@ -1,19 +1,70 @@
 import { Image, ImageBackground } from "expo-image";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Dimensions, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const categories = [
-    { id: 1, name: "Fontanería", path: require("@/assets/icons/services/fontaneria.png") },
-    { id: 2, name: "Limpieza", path: require("@/assets/icons/services/limpieza.png") },
-    { id: 3, name: "Electricista", path: require("@/assets/icons/services/electricista.png") },
-    { id: 4, name: "Carpintería", path: require("@/assets/icons/services/carpinteria.png") },
-    { id: 5, name: "Montaje", path: require("@/assets/icons/services/montaje.png") },
-    { id: 6, name: "Jardinería", path: require("@/assets/icons/services/jardineria.png") },
+    {
+        id: 1,
+        label: "Fontanería",
+        value: "fontaneria",
+        nombre: "Fontanería",
+        icono: require("@/assets/icons/services/fontaneria.png"),
+        iconoSelected: require("@/assets/icons/services/fontaneria_selected.png"),
+        path: "/(web)/fontaneria"
+    },
+    {
+        id: 2,
+        label: "Limpieza",
+        value: "limpieza",
+        nombre: "Limpieza",
+        icono: require("@/assets/icons/services/limpieza.png"),
+        iconoSelected: require("@/assets/icons/services/limpieza_selected.png"),
+        path: "/(web)/limpieza"
+    },
+    {
+        id: 3,
+        label: "Electricista",
+        value: "electricista",
+        nombre: "Electricista",
+        icono: require("@/assets/icons/services/electricista.png"),
+        iconoSelected: require("@/assets/icons/services/electricista_selected.png"),
+        path: "/(web)/services/fontaneria"
+    },
+    {
+        id: 4,
+        label: "Jardinería",
+        value: "jardineria",
+        nombre: "Jardinería",
+        icono: require("@/assets/icons/services/jardineria.png"),
+        iconoSelected: require("@/assets/icons/services/jardineria_selected.png"),
+        path: "/(web)/jardineria"
+    },
+    {
+        id: 5,
+        label: "Montaje",
+        value: "montaje",
+        nombre: "Montaje",
+        icono: require("@/assets/icons/services/montaje.png"),
+        iconoSelected: require("@/assets/icons/services/montaje_selected.png"),
+        path: "/(web)/services/fontaneria"
+    },
+    {
+        id: 6,
+        label: "Carpintería",
+        value: "carpinteria",
+        nombre: "Carpintería",
+        icono: require("@/assets/icons/services/carpinteria.png"),
+        iconoSelected: require("@/assets/icons/services/carpinteria_selected.png"),
+        path: "/(web)/services/fontaneria"
+    },
 ];
 
 const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
     const screenWidth = Dimensions.get("window").width;
     const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+    const [seleccionado, setSeleccionado] = useState(1);
+    const router = useRouter();
 
     React.useEffect(() => {
         const { width, height } = Dimensions.get("window");
@@ -61,18 +112,19 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                     {/* Texto y botones */}
                     <View
                         style={{
-                            width: isSmallScreen ? "100%" : "50%",
+                            width: "100%",
                             justifyContent: "center",
                             gap: 20,
                         }}
                     >
                         <Text
                             style={{
-                                fontSize: isSmallScreen ? 28 : 40,
+                                fontSize: isSmallScreen ? 28 : 50,
                                 fontWeight: 700,
                                 color: "white",
-                                textAlign: isSmallScreen ? "center" : "left",
-                                width: isSmallScreen ? "100%" : "80%"
+                                width: "75%",
+                                textAlign: "center",
+                                marginHorizontal: "auto"
                             }}
                         >
                             Servicios a domicilio fáciles, rápidos y de confianza
@@ -83,8 +135,9 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                                 fontSize: isSmallScreen ? 24 : 28,
                                 fontWeight: 600,
                                 color: "white",
-                                textAlign: isSmallScreen ? "center" : "left",
-                                width: isSmallScreen ? "100%" : "80%"
+                                textAlign: "center",
+                                width: "75%",
+                                marginHorizontal: "auto"
                             }}
                         >
                             Encuentra y contrata en segundos limpieza, fontanería, electricidad, carpintería y mucho más en tu ciudad
@@ -93,11 +146,14 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                         <View
                             style={{
                                 gap: 10,
-                                flexDirection: "column",
-                                alignItems: isSmallScreen ? "center" : "flex-start",
+                                flexDirection: "row",
+                                width: "75%",
+                                marginHorizontal: "auto",
+                                alignItems: "center",
+                                justifyContent: "center"
                             }}
                         >
-                            {["Seleccionar ubicación", "Ciudad", "Selecciona el servicio"].map((text, i) => (
+                            {["Seleccionar ubicación", "Ciudad"].map((text, i) => (
                                 <Pressable
                                     key={i}
                                     style={{
@@ -105,7 +161,7 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                                         paddingHorizontal: 18,
                                         backgroundColor: "white",
                                         borderRadius: 12,
-                                        width: isSmallScreen ? "100%" : "75%",
+                                        width: "45%",
                                     }}
                                     onPress={handleOpenModal}
                                 >
@@ -114,54 +170,45 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                             ))}
                         </View>
 
-                        <Pressable
-                            style={{
-                                paddingVertical: 10,
-                                paddingHorizontal: 30,
-                                borderRadius: 4,
-                                backgroundColor: "#FFA962",
-                                alignSelf: isSmallScreen ? "center" : "flex-start",
-                                marginTop: 10,
-                            }}
+                        <View
+                            style={[
+                                stylesServicios.lista,
+                                {
+                                    flexWrap: isSmallScreen ? "wrap" : "nowrap",
+                                    gap: isSmallScreen ? 16 : 20,
+                                },
+                            ]}
                         >
-                            <Text
-                                style={{
-                                    color: "white",
-                                    fontWeight: 500,
-                                    fontSize: 18,
-                                    textAlign: "center",
-                                }}
-                                onPress={handleOpenModal}
-                            >
-                                CONTRATA AHORA
-                            </Text>
-                        </Pressable>
+                            {categories.map((item) => {
+                                const activo = item.id === seleccionado;
+                                return (
+                                    <TouchableOpacity
+                                        key={item.id}
+                                        style={[
+                                            stylesServicios.card,
+                                            activo && stylesServicios.cardActivo,
+                                            { width: isSmallScreen ? 100 : 120, height: isSmallScreen ? 100 : 120 },
+                                        ]}
+                                        onPress={() => {
+                                            // setSeleccionado(item.id)
+                                            // @ts-expect-error
+                                            router.push(item.path)
+                                        }}
+                                        activeOpacity={0.8}
+                                    >
+                                        <Image
+                                            source={activo ? item.iconoSelected : item.icono}
+                                            style={stylesServicios.icono}
+                                            resizeMode="contain"
+                                        />
+                                        <Text style={[stylesServicios.texto, activo && stylesServicios.textoActivo]}>
+                                            {item.nombre}
+                                        </Text>
+                                    </TouchableOpacity>
+                                );
+                            })}
+                        </View>
                     </View>
-
-                    {/* Imagen */}
-
-                    <View
-                        style={{
-                            width: isSmallScreen ? "100%" : isTablet ? "45%" : "40%",
-                            marginTop: isSmallScreen ? 20 : 0,
-                            justifyContent: "flex-end",
-                            alignItems: "center",
-                            position: "relative",
-                            height: "100%"
-                        }}
-                    >
-                        <Image
-                            source={require("@/assets/images/paco-home.png")}
-                            style={{
-                                width: isSmallScreen ? "80%" : "100%",
-                                aspectRatio: 0.975,
-                                objectFit: "contain",
-                                position: "absolute",
-                                bottom: 0
-                            }}
-                        />
-                    </View>
-
                 </View>
             </View>
         </View>
@@ -175,9 +222,78 @@ const styles = StyleSheet.create({
         paddingVertical: 24,
         paddingBottom: 0,
         gap: 30,
+        alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#0C85BEDD",
     },
 });
 
 export default HeroSection;
+
+
+const stylesServicios = StyleSheet.create({
+    container: {
+        backgroundColor: "#fff",
+        paddingHorizontal: 20,
+        alignItems: "center",
+        gap: 20,
+    },
+    titulo: {
+        fontSize: 20,
+        fontWeight: "700",
+        marginBottom: 30,
+        textAlign: "center",
+        color: "#333",
+    },
+    lista: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        maxWidth: 900,
+        flexWrap: "wrap",
+        marginHorizontal: "auto",
+        marginTop: 10
+    },
+    card: {
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: "#DDD",
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 8,
+        elevation: 2, // sombra sutil
+    },
+    cardActivo: {
+        backgroundColor: "#FFA858",
+        borderColor: "#50B4E8",
+        elevation: 5, // más sombra cuando está activo
+    },
+    icono: {
+        width: 50,
+        height: 50,
+        marginBottom: 6,
+    },
+    texto: {
+        fontSize: 12,
+        color: "#333",
+        fontWeight: "500",
+        textAlign: "center",
+    },
+    textoActivo: {
+        color: "#fff",
+    },
+    boton: {
+        marginTop: 30,
+        backgroundColor: "#0077B6",
+        paddingVertical: 12,
+        paddingHorizontal: 28,
+        borderRadius: 8,
+    },
+    botonTexto: {
+        fontSize: 20,
+        color: "#fff",
+        fontWeight: "700",
+        textAlign: "center",
+    },
+});
