@@ -8,7 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const Contact = () => {
     const router = useRouter();
 
-    const handleGoBack = () => router.push("/(tabs)/profile");
+    const handleGoBack = () => router.push("/(private)/(tabs)/profile");
 
     return (
         <SafeAreaView style={styles.safeArea}>

@@ -1,5 +1,6 @@
+import { Image } from "expo-image";
 import React from "react";
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -39,7 +40,7 @@ export default function PromoSection() {
                 <Image
                     source={require("@/assets/images/logo.png")}
                     style={styles.image}
-                    resizeMode="contain"
+                    contentFit="contain"
                 />
             </View>
         </View>

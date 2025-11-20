@@ -1,7 +1,7 @@
 import { Image, ImageBackground } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Dimensions, Platform, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 
 const categories = [
     {
@@ -112,19 +112,18 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                     {/* Texto y botones */}
                     <View
                         style={{
-                            width: "100%",
+                            width: isSmallScreen ? "100%" : "50%",
                             justifyContent: "center",
-                            gap: 20,
+                            zIndex: 100
                         }}
                     >
                         <Text
                             style={{
-                                fontSize: isSmallScreen ? 28 : 50,
+                                fontSize: isSmallScreen ? 20 : isTablet ? 34 : 50,
                                 fontWeight: 700,
                                 color: "white",
-                                width: "75%",
-                                textAlign: "center",
-                                marginHorizontal: "auto"
+                                width: "100%",
+                                textAlign: isSmallScreen ? "center" : "left"
                             }}
                         >
                             Servicios a domicilio fáciles, rápidos y de confianza
@@ -132,12 +131,12 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
 
                         <Text
                             style={{
-                                fontSize: isSmallScreen ? 24 : 28,
+                                fontSize: isSmallScreen ? 18 : isTablet ? 22 : 28,
                                 fontWeight: 600,
                                 color: "white",
-                                textAlign: "center",
-                                width: "75%",
-                                marginHorizontal: "auto"
+                                width: "100%",
+                                marginHorizontal: "auto",
+                                textAlign: isSmallScreen ? "center" : "left"
                             }}
                         >
                             Encuentra y contrata en segundos limpieza, fontanería, electricidad, carpintería y mucho más en tu ciudad
@@ -146,14 +145,13 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                         <View
                             style={{
                                 gap: 10,
-                                flexDirection: "row",
-                                width: "75%",
-                                marginHorizontal: "auto",
-                                alignItems: "center",
-                                justifyContent: "center"
+                                flexDirection: "column",
+                                width: "100%",
+                                marginTop: 15,
+                                alignItems: isSmallScreen ? "center" : "flex-start"
                             }}
                         >
-                            {["Seleccionar ubicación", "Ciudad"].map((text, i) => (
+                            {["Seleccionar ubicación", "Ciudad", "Selecciona el servicio"].map((text, i) => (
                                 <Pressable
                                     key={i}
                                     style={{
@@ -161,54 +159,54 @@ const HeroSection = ({ handleOpenModal }: { handleOpenModal: () => void }) => {
                                         paddingHorizontal: 18,
                                         backgroundColor: "white",
                                         borderRadius: 12,
-                                        width: "45%",
+                                        width: "75%",
                                     }}
                                     onPress={handleOpenModal}
                                 >
-                                    <Text style={{ opacity: 0.5, fontSize: 18, fontWeight: 500 }}>{text}</Text>
+                                    <Text style={{ opacity: 0.5, fontSize: isSmallScreen ? 14 : isTablet ? 16 : 18, fontWeight: 500 }}>{text}</Text>
                                 </Pressable>
                             ))}
+
+                            <Pressable
+                                style={{
+                                    paddingVertical: 10,
+                                    paddingHorizontal: 30,
+                                    backgroundColor: "#FFA962",
+                                    width: "75%",
+                                    marginTop: 10,
+                                    borderRadius: 12,
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: "white",
+                                        fontWeight: 500,
+                                        fontSize: isSmallScreen ? 14 : isTablet ? 16 : 18,
+                                        textAlign: "center",
+                                    }}
+                                    onPress={handleOpenModal}
+                                >
+                                    CONTRATA AHORA
+                                </Text>
+                            </Pressable>
                         </View>
 
-                        <View
-                            style={[
-                                stylesServicios.lista,
-                                {
-                                    flexWrap: isSmallScreen ? "wrap" : "nowrap",
-                                    gap: isSmallScreen ? 16 : 20,
-                                },
-                            ]}
-                        >
-                            {categories.map((item) => {
-                                const activo = item.id === seleccionado;
-                                return (
-                                    <TouchableOpacity
-                                        key={item.id}
-                                        style={[
-                                            stylesServicios.card,
-                                            activo && stylesServicios.cardActivo,
-                                            { width: isSmallScreen ? 100 : 120, height: isSmallScreen ? 100 : 120 },
-                                        ]}
-                                        onPress={() => {
-                                            // setSeleccionado(item.id)
-                                            // @ts-expect-error
-                                            router.push(item.path)
-                                        }}
-                                        activeOpacity={0.8}
-                                    >
-                                        <Image
-                                            source={activo ? item.iconoSelected : item.icono}
-                                            style={stylesServicios.icono}
-                                            resizeMode="contain"
-                                        />
-                                        <Text style={[stylesServicios.texto, activo && stylesServicios.textoActivo]}>
-                                            {item.nombre}
-                                        </Text>
-                                    </TouchableOpacity>
-                                );
-                            })}
-                        </View>
                     </View>
+                    <Image
+                        source={require("@/assets/images/paco-home.png")}
+                        style={{
+                            marginTop: "auto",
+                            width: "100%",
+                            maxWidth: "50%",
+                            maxHeight: "100%",
+                            aspectRatio: 1,
+                            objectFit: "contain",
+                            position: isSmallScreen ? "absolute" : "relative",
+                            bottom: 0,
+                            right: 0,
+                            zIndex: 10
+                        }}
+                    />
                 </View>
             </View>
         </View>
@@ -262,12 +260,12 @@ const stylesServicios = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         padding: 8,
-        elevation: 2, // sombra sutil
+        elevation: 2,
     },
     cardActivo: {
         backgroundColor: "#FFA858",
         borderColor: "#50B4E8",
-        elevation: 5, // más sombra cuando está activo
+        elevation: 5, 
     },
     icono: {
         width: 50,
