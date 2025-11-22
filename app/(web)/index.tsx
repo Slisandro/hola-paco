@@ -470,13 +470,8 @@ function FeaturesSection2() {
   }, []);
 
   return (
-    <View
-      style={[
-        stylesFeatureSection2.section,
-        // @ts-ignore
-        { minHeight: windowHeight ? windowHeight * 0.7 : "70vh" },
-      ]}
-    >
+    // @ts-expect-error
+    <View style={[stylesFeatureSection2.section, { minHeight: "70vh", flexGrow: 1 }]}>
       <View style={{ marginVertical: 30, gap: 20 }}>
         <Text
           style={[stylesFeatureSection2.heading, { textTransform: "none", fontSize: isSmallScreen ? 24 : 36, color: "#000000" }]}
@@ -579,7 +574,7 @@ const stylesFeature = StyleSheet.create({
     alignItems: "flex-start",
     gap: 24,
     paddingHorizontal: 16,
-    height: 350,
+    height: "auto",
     width: "100%",
   },
   card: {
@@ -597,7 +592,7 @@ const stylesFeature = StyleSheet.create({
     paddingVertical: 25,
     paddingHorizontal: 20,
     gap: 10,
-    height: "100%"
+    // ❌ height: "100%" (quitar)
   },
   iconCircle: {
     borderRadius: 15,
@@ -669,8 +664,7 @@ const servicios = [
     label: "Limpieza",
     value: "limpieza",
     nombre: "Limpieza",
-    icono: require("@/assets/icons/services/limpieza.png"),
-    iconoSelected: require("@/assets/icons/services/limpieza_selected.png"),
+    icono: require("@/assets/images/limpieza.jpeg"),
     path: "/(web)/limpieza"
   },
   {
@@ -678,8 +672,7 @@ const servicios = [
     label: "Cerrajería",
     value: "cerrajería",
     nombre: "Cerrajería",
-    icono: require("@/assets/icons/services/electricista.png"),
-    iconoSelected: require("@/assets/icons/services/electricista_selected.png"),
+    icono: require("@/assets/images/cerrajeria.jpeg"),
     path: "/(web)/services/fontaneria"
   },
   {
@@ -687,8 +680,7 @@ const servicios = [
     label: "Electricista",
     value: "electricista",
     nombre: "Electricista",
-    icono: require("@/assets/icons/services/electricista.png"),
-    iconoSelected: require("@/assets/icons/services/electricista_selected.png"),
+    icono: require("@/assets/images/limpieza2.jpeg"),
     path: "/(web)/services/fontaneria"
   },
   {
@@ -696,8 +688,7 @@ const servicios = [
     label: "Masajista",
     value: "fontaneria",
     nombre: "Masajista",
-    icono: require("@/assets/icons/services/fontaneria.png"),
-    iconoSelected: require("@/assets/icons/services/fontaneria_selected.png"),
+    icono: require("@/assets/images/limpieza.jpeg"),
     path: "/(web)/fontaneria"
   },
   {
@@ -705,8 +696,7 @@ const servicios = [
     label: "Clases de refuerzo",
     value: "limpieza",
     nombre: "Clases de refuerzo",
-    icono: require("@/assets/icons/services/limpieza.png"),
-    iconoSelected: require("@/assets/icons/services/limpieza_selected.png"),
+    icono: require("@/assets/images/pintura.jpeg"),
     path: "/(web)/limpieza"
   },
   {
@@ -714,7 +704,7 @@ const servicios = [
     label: "Limpieza de tapicería",
     value: "electricista",
     nombre: "Limpieza de tapicería",
-    icono: require("@/assets/icons/services/electricista.png"),
+    icono: require("@/assets/images/pintura.jpeg"),
     iconoSelected: require("@/assets/icons/services/electricista_selected.png"),
     path: "/(web)/services/fontaneria"
   }
@@ -747,13 +737,13 @@ function Servicios() {
           },
         ]}>
         {servicios.map((item, index) => {
-          const activo = item.id === seleccionado;
+          // const activo = item.id === seleccionado;
           return (
             <TouchableOpacity
               key={item.id}
               style={[
                 stylesServicios.card,
-                activo && stylesServicios.cardActivo,
+                // activo && stylesServicios.cardActivo,
                 {
                   width: "32%",
                   aspectRatio: 1, // cuadrado perfecto
@@ -767,15 +757,18 @@ function Servicios() {
             >
               {index === 0 && (
                 <View style={{ position: "absolute", top: 0, left: 0, padding: 4, borderRadius: 6, backgroundColor: "#007ACC" }}>
-                  <Text style={{ color: "white", fontSize: 12 }}>Más demandado</Text>
+                  <Text style={{ color: "white", fontSize: isMobile ? 9 : 12 }}>Más demandado</Text>
                 </View>
               )}
-              <Image
-                source={activo ? item.iconoSelected : item.icono}
-                style={stylesServicios.icono}
-                resizeMode="contain"
-              />
-              <Text style={[stylesServicios.texto, activo && stylesServicios.textoActivo]}>
+              <View
+                style={stylesServicios.icono}>
+                <Image
+                  source={item.icono}
+                  style={stylesServicios.icono}
+                  contentFit="cover"
+                />
+              </View>
+              <Text style={[stylesServicios.texto]}>
                 {item.nombre}
               </Text>
             </TouchableOpacity>
@@ -819,23 +812,29 @@ const stylesServicios = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 8,
-    elevation: 2, // sombra sutil
+    elevation: 2,
   },
   cardActivo: {
     backgroundColor: "#FFA858",
     borderColor: "#50B4E8",
-    elevation: 5, // más sombra cuando está activo
+    elevation: 5,
   },
   icono: {
-    width: 50,
-    height: 50,
-    marginBottom: 6,
+    position: "absolute",
+    top: 0,
+    borderRadius: "inherit",
+    bottom: 0,
+    width: "100%",
+    height: "100%",
+    aspectRatio: 1,
+    resizeMode: "cover",
   },
   texto: {
-    fontSize: 12,
-    color: "#333",
-    fontWeight: "500",
+    fontSize: 14,
+    color: "white",
+    fontWeight: 700,
     textAlign: "center",
+    marginTop: "auto"
   },
   textoActivo: {
     color: "#fff",

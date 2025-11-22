@@ -1,19 +1,24 @@
-import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+    Dimensions,
+    Image,
+    Pressable,
+    StyleSheet,
+    Text,
+    View,
+} from "react-native";
 
-export default function BannerDiagonalReverse2() {
+export default function BannerDiagonalReverse() {
     const screenWidth = Dimensions.get("window").width;
 
-    // Breakpoints responsivos
+    // Breakpoints
     const isMobile = screenWidth < 600;
     const isTablet = screenWidth >= 600 && screenWidth < 1024;
 
-    const bannerHeight = isMobile ? 260 : isTablet ? 300 : 260;
-
     return (
-        <View style={[styles.container, { height: bannerHeight }]}>
+        // @ts-expect-error
+        <View style={[styles.container, { height: isMobile ? "20vh" : "30vh" }]}>
             {/* LEFT: gradiente azul */}
             <LinearGradient
                 colors={["#007ACC", "#004F8A"]}
@@ -22,7 +27,7 @@ export default function BannerDiagonalReverse2() {
                 style={styles.blueBg}
             />
 
-            {/* RIGHT: gradiente naranja con diagonal */}
+            {/* RIGHT: gradiente naranja (diagonal) */}
             <LinearGradient
                 colors={["#FFB87A", "#FF8C42"]}
                 start={{ x: 1, y: 0 }}
@@ -33,21 +38,22 @@ export default function BannerDiagonalReverse2() {
                 ]}
             />
 
-            {/* Contenido */}
+            {/* CONTENIDO (usa exactamente tu bloque) */}
             <View
                 style={[
                     styles.content,
-                    { paddingHorizontal: isMobile ? 20 : isTablet ? 40 : 80 },
+                    { paddingHorizontal: isMobile ? 0 : isTablet ? 40 : 80 },
                 ]}
             >
-                {/* TEXTO PRIMERO */}
+
+                {/* Texto */}
                 <View
                     style={[
                         styles.textContainer,
                         {
-                            width: isMobile ? "90%" : isTablet ? "55%" : "50%",
+                            marginLeft: isMobile ? "0%" : isTablet ? "10%" : "12%",
+                            width: isMobile ? "70%" : isTablet ? "58%" : "50%",
                             alignItems: isMobile ? "center" : "flex-start",
-                            marginRight: isMobile ? "4%" : "6%",
                         },
                     ]}
                 >
@@ -56,9 +62,9 @@ export default function BannerDiagonalReverse2() {
                             styles.title,
                             {
                                 fontSize: isMobile ? 16 : isTablet ? 18 : 26,
-                                lineHeight: isMobile ? 22 : isTablet ? 26 : 30,
+                                lineHeight: isMobile ? 18 : isTablet ? 26 : 30,
                                 textAlign: isMobile ? "center" : "left",
-                                maxWidth: isMobile ? "100%" : "80%",
+                                maxWidth: isTablet ? "80%" : "100%",
                                 textTransform: "uppercase",
                             },
                         ]}
@@ -83,25 +89,27 @@ export default function BannerDiagonalReverse2() {
                                     fontSize: isMobile ? 12 : 16,
                                     textTransform: "uppercase",
                                     color: "white",
-                                    margin: 4,
+                                    margin: 4
                                 },
                             ]}
                         >
-                            RESERVAR TU SERVICIO AHORA
+                            AGENDA TU SERVICIO AHORA
                         </Text>
                     </Pressable>
                 </View>
 
-                {/* IMAGEN DESPUÉS */}
+                {/* Imagen del personaje */}
                 <Image
                     source={require("@/assets/images/homepage/paco-download.png")}
                     style={[
                         styles.image,
                         {
-                            width: isMobile ? 140 : isTablet ? 200 : 260,
-                            height: isMobile ? 140 : isTablet ? 200 : 260,
-                            right: isMobile ? -10 : "10%",
-                            // bottom: isMobile ? -16 : -10,
+                            width: "100%",
+                            maxWidth: "30%",
+                            maxHeight: "100%",
+                            right: isMobile ? "0%" : isTablet ? "15%" : "10%",
+                            bottom: -10,
+                            // marginTop: "auto"
                         },
                     ]}
                 />
@@ -119,20 +127,23 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFB87A",
     },
 
+    /* Blue left background */
     blueBg: {
         flex: 1.0,
     },
 
+    /* Orange right diagonal */
     orangeBg: {
         flex: 0.45,
         marginLeft: -60,
     },
 
+    /* Content sits above the backgrounds */
     content: {
         position: "absolute",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         width: "100%",
         height: "100%",
         zIndex: 10,
@@ -140,12 +151,18 @@ const styles = StyleSheet.create({
 
     image: {
         position: "absolute",
-        zIndex: 20,
+        // zIndex: 20,
         resizeMode: "contain",
-        elevation: 6,
+        // sombra sutil (iOS/Android)
+        // shadowColor: "#000",
+        // shadowOffset: { width: 0, height: 4 },
+        // shadowOpacity: 0.15,
+        // shadowRadius: 8,
+        // elevation: 6,
     },
 
     textContainer: {
+        // flex: 1,
         zIndex: 30,
     },
 

@@ -16,11 +16,9 @@ export default function BannerDiagonal() {
   const isMobile = screenWidth < 600;
   const isTablet = screenWidth >= 600 && screenWidth < 1024;
 
-  // Altura adaptable
-  const bannerHeight = isMobile ? 220 : isTablet ? 260 : 220;
-
   return (
-    <View style={[styles.container, { height: bannerHeight }]}>
+    // @ts-expect-error
+    <View style={[styles.container, { height: isMobile ? "20vh" : "30vh" }]}>
       {/* Fondo degradado naranja */}
       <LinearGradient
         colors={["#FFB87A", "#FF8C42"]}
@@ -44,7 +42,7 @@ export default function BannerDiagonal() {
       <View
         style={[
           styles.content,
-          { paddingHorizontal: isMobile ? 20 : isTablet ? 40 : 80 },
+          { paddingHorizontal: isMobile ? 0 : isTablet ? 40 : 80 },
         ]}
       >
         {/* Imagen del personaje */}
@@ -53,10 +51,12 @@ export default function BannerDiagonal() {
           style={[
             styles.image,
             {
-              width: isMobile ? 140 : isTablet ? 200 : 260,
-              height: isMobile ? 140 : isTablet ? 200 : 260,
-              left: isMobile ? 20 : isTablet ? 40 : 60,
-              bottom: isMobile ? -20 : 0,
+              width: "100%",
+              maxWidth: "30%",
+              maxHeight: "100%",
+              left: isMobile ? "0%" : isTablet ? "15%" : "10%",
+              bottom: -10,
+              // marginTop: "auto"
             },
           ]}
         />
@@ -66,11 +66,10 @@ export default function BannerDiagonal() {
           style={[
             styles.textContainer,
             {
-              alignItems: "center",
-              justifyContent: "center",
-              width: isMobile ? "90%" : isTablet ? "70%" : "60%",
-              marginLeft: isMobile ? "auto" : "auto",
-              marginRight: isMobile ? "auto" : "auto",
+              marginRight: isMobile ? "2%" : isTablet ? "10%" : "12%",
+              width: isMobile ? "70%" : isTablet ? "58%" : "50%",
+              marginLeft: "auto",
+              alignItems: isMobile ? "center" : "flex-start",
             },
           ]}
         >
@@ -79,9 +78,9 @@ export default function BannerDiagonal() {
               styles.title,
               {
                 fontSize: isMobile ? 16 : isTablet ? 18 : 26,
-                lineHeight: isMobile ? 22 : isTablet ? 26 : 30,
-                textAlign: "center",
-                maxWidth: "90%",
+                lineHeight: isMobile ? 18 : isTablet ? 26 : 30,
+                textAlign: isMobile ? "center" : "right",
+                maxWidth: "100%",
                 textTransform: "uppercase",
               },
             ]}
@@ -94,7 +93,7 @@ export default function BannerDiagonal() {
             style={[
               styles.button,
               {
-                alignSelf: "center",
+                alignSelf: isMobile ? "center" : "flex-end",
                 paddingHorizontal: isMobile ? 14 : 20,
                 paddingVertical: isMobile ? 8 : 10,
                 marginTop: 20,
@@ -105,8 +104,10 @@ export default function BannerDiagonal() {
               style={[
                 styles.buttonText,
                 {
-                  fontSize: isMobile ? 12 : 20,
+                  fontSize: isMobile ? 12 : 16,
                   textTransform: "uppercase",
+                  color: "white",
+                  margin: 4
                 },
               ]}
             >
@@ -118,7 +119,6 @@ export default function BannerDiagonal() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     position: "relative",
@@ -134,35 +134,48 @@ const styles = StyleSheet.create({
     flex: 1.8,
     marginLeft: -120,
   },
+
+  /* Content sits above the backgrounds */
   content: {
     position: "absolute",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     width: "100%",
     height: "100%",
     zIndex: 10,
   },
+
   image: {
     position: "absolute",
-    zIndex: 10,
+    // zIndex: 20,
     resizeMode: "contain",
+    // sombra sutil (iOS/Android)
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 4 },
+    // shadowOpacity: 0.15,
+    // shadowRadius: 8,
+    // elevation: 6,
   },
+
   textContainer: {
-    zIndex: 11,
+    // flex: 1,
+    zIndex: 30,
   },
+
   title: {
     color: "#fff",
-    fontWeight: "700",
-    textTransform: "uppercase",
+    fontWeight: "800",
   },
+
   button: {
     backgroundColor: "#FFB87A",
     marginTop: 14,
-    borderRadius: 6,
+    borderRadius: 8,
   },
+
   buttonText: {
-    color: "#fff",
-    fontWeight: "700",
+    color: "#0B1A2A",
+    fontWeight: "800",
   },
 });

@@ -16,11 +16,9 @@ export default function BannerDiagonalReverse() {
     const isMobile = screenWidth < 600;
     const isTablet = screenWidth >= 600 && screenWidth < 1024;
 
-    // Altura adaptable
-    const bannerHeight = isMobile ? 260 : isTablet ? 300 : 260;
-
     return (
-        <View style={[styles.container, { height: bannerHeight }]}>
+        // @ts-expect-error
+        <View style={[styles.container, { height: isMobile ? "20vh" : "30vh" }]}>
             {/* LEFT: gradiente azul */}
             <LinearGradient
                 colors={["#007ACC", "#004F8A"]}
@@ -44,30 +42,17 @@ export default function BannerDiagonalReverse() {
             <View
                 style={[
                     styles.content,
-                    { paddingHorizontal: isMobile ? 20 : isTablet ? 40 : 80 },
+                    { paddingHorizontal: isMobile ? 0 : isTablet ? 40 : 80 },
                 ]}
             >
-                {/* Imagen del personaje */}
-                <Image
-                    source={require("@/assets/images/homepage/paco-download.png")}
-                    style={[
-                        styles.image,
-                        {
-                            width: isMobile ? 140 : isTablet ? 200 : 260,
-                            height: isMobile ? 140 : isTablet ? 200 : 260,
-                            right: isMobile ? "8%" : isTablet ? "18%" : "22%", // porcentajes para responsivo
-                            bottom: isMobile ? -20 : -6,
-                        },
-                    ]}
-                />
 
                 {/* Texto */}
                 <View
                     style={[
                         styles.textContainer,
                         {
-                            marginLeft: isMobile ? "6%" : isTablet ? "10%" : "12%",
-                            width: isMobile ? "86%" : isTablet ? "58%" : "50%",
+                            marginLeft: isMobile ? "0%" : isTablet ? "10%" : "12%",
+                            width: isMobile ? "70%" : isTablet ? "58%" : "50%",
                             alignItems: isMobile ? "center" : "flex-start",
                         },
                     ]}
@@ -77,9 +62,9 @@ export default function BannerDiagonalReverse() {
                             styles.title,
                             {
                                 fontSize: isMobile ? 16 : isTablet ? 18 : 26,
-                                lineHeight: isMobile ? 22 : isTablet ? 26 : 30,
+                                lineHeight: isMobile ? 18 : isTablet ? 26 : 30,
                                 textAlign: isMobile ? "center" : "left",
-                                maxWidth: isMobile ? "100%" : "50%",
+                                maxWidth: isMobile ? "100%" : "75%",
                                 textTransform: "uppercase",
                             },
                         ]}
@@ -112,6 +97,22 @@ export default function BannerDiagonalReverse() {
                         </Text>
                     </Pressable>
                 </View>
+                
+                {/* Imagen del personaje */}
+                <Image
+                    source={require("@/assets/images/homepage/paco-download.png")}
+                    style={[
+                        styles.image,
+                        {
+                            width: "100%",
+                            maxWidth: "30%",
+                            maxHeight: "100%",
+                            right: isMobile ? "0%" : isTablet ? "15%" : "10%",
+                            bottom: -10,
+                            // marginTop: "auto"
+                        },
+                    ]}
+                />
             </View>
         </View>
     );
@@ -150,18 +151,18 @@ const styles = StyleSheet.create({
 
     image: {
         position: "absolute",
-        zIndex: 20,
+        // zIndex: 20,
         resizeMode: "contain",
         // sombra sutil (iOS/Android)
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 8,
-        elevation: 6,
+        // shadowColor: "#000",
+        // shadowOffset: { width: 0, height: 4 },
+        // shadowOpacity: 0.15,
+        // shadowRadius: 8,
+        // elevation: 6,
     },
 
     textContainer: {
-        flex: 1,
+        // flex: 1,
         zIndex: 30,
     },
 

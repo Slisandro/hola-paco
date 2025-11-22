@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 
 export default function Reviews() {
     const screenWidth = Dimensions.get("window").width;
@@ -62,12 +62,15 @@ export default function Reviews() {
             </Text>
 
             {/* Scroll horizontal de reseñas */}
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={[
+            <View
+                style={[
                     styles.scrollContent,
-                    { gap: isMobile ? 16 : 20, paddingHorizontal: isMobile ? 8 : 12 },
+                    {
+                        gap: isMobile ? 16 : 20,
+                        paddingHorizontal: isMobile ? 8 : 12,
+                        flex: 1,
+                        flexDirection: isMobile ? "column" : "row"
+                    },
                 ]}
             >
                 {reviews.map((review) => (
@@ -75,7 +78,8 @@ export default function Reviews() {
                         key={review.id}
                         style={[
                             styles.card,
-                            { width: isMobile ? 260 : isTablet ? 320 : 380 },
+                            { width: "45%" }
+                            // { width: isMobile ? 260 : isTablet ? 320 : 380 },
                         ]}
                     >
                         {/* Header de usuario */}
@@ -111,7 +115,7 @@ export default function Reviews() {
                         <Text style={styles.reviewText}>{review.text}</Text>
                     </View>
                 ))}
-            </ScrollView>
+            </View>
         </View>
     );
 }
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     scrollContent: {
-        justifyContent: "center",
+        justifyContent: "center"
     },
     card: {
         backgroundColor: "white",
