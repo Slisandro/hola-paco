@@ -18,7 +18,7 @@ export default function BannerDiagonalReverse() {
 
     return (
         // @ts-expect-error
-        <View style={[styles.container, { height: isMobile ? "20vh" : "30vh" }]}>
+        <View style={[styles.container, { height: isMobile ? "24vh" : "30vh", marginTop: 10 }]}>
             {/* LEFT: gradiente azul */}
             <LinearGradient
                 colors={["#007ACC", "#004F8A"]}

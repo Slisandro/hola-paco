@@ -68,8 +68,8 @@ export default function Reviews() {
                     {
                         gap: isMobile ? 16 : 20,
                         paddingHorizontal: isMobile ? 8 : 12,
-                        flex: 1,
-                        flexDirection: isMobile ? "column" : "row"
+                        flexDirection: isMobile ? "column" : "row",
+                        flexWrap: isMobile ? "nowrap" : "wrap",
                     },
                 ]}
             >
@@ -78,8 +78,13 @@ export default function Reviews() {
                         key={review.id}
                         style={[
                             styles.card,
-                            { width: "45%" }
-                            // { width: isMobile ? 260 : isTablet ? 320 : 380 },
+                            {
+                                width: isMobile
+                                    ? "100%"     
+                                    : isTablet
+                                        ? "45%"   
+                                        : "30%",      
+                            },
                         ]}
                     >
                         {/* Header de usuario */}

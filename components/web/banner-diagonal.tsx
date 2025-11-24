@@ -18,7 +18,7 @@ export default function BannerDiagonal() {
 
   return (
     // @ts-expect-error
-    <View style={[styles.container, { height: isMobile ? "20vh" : "30vh" }]}>
+    <View style={[styles.container, { height: isMobile ? "24vh" : "30vh" }]}>
       {/* Fondo degradado naranja */}
       <LinearGradient
         colors={["#FFB87A", "#FF8C42"]}
