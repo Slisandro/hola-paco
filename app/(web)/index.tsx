@@ -471,8 +471,8 @@ function FeaturesSection2() {
 
   return (
     // @ts-expect-error
-    <View style={[stylesFeatureSection2.section, { minHeight: "70vh", flexGrow: 1 }]}>
-      <View style={{ marginVertical: 30, gap: 20 }}>
+    <View style={[stylesFeatureSection2.section, { minHeight: isSmallScreen ? "100vh" : "40vh" }]}>
+      <View style={{ marginVertical: 30, gap: 10 }}>
         <Text
           style={[stylesFeatureSection2.heading, { textTransform: "none", fontSize: isSmallScreen ? 24 : 36, color: "#000000" }]}
         >
@@ -630,7 +630,6 @@ const stylesFeature = StyleSheet.create({
 
   button: {
     backgroundColor: "#FFB87A",
-    marginTop: 14,
     borderRadius: 6,
   },
   buttonText: {
@@ -732,7 +731,7 @@ function Servicios() {
             flexDirection: "row",
             flexWrap: "wrap",
             justifyContent: "space-between",
-            columnGap: 20,
+            columnGap: 10,
             rowGap: 20,
           },
         ]}>
@@ -743,18 +742,19 @@ function Servicios() {
               key={item.id}
               style={[
                 stylesServicios.card,
-                // activo && stylesServicios.cardActivo,
                 {
-                  width: "32%",
-                  aspectRatio: 1, // cuadrado perfecto
-                  maxWidth: "25%",  // opcional
-                  position: "relative"
+                  width: isMobile
+                    ? "48%"      // 👉 2 por fila en mobile
+                    : "32%",
+                  aspectRatio: 1,
+                  position: "relative",
                 },
               ]}
               // @ts-expect-error
               onPress={() => router.push(item.path)}
               activeOpacity={0.8}
             >
+
               {index === 0 && (
                 <View style={{ position: "absolute", top: 0, left: 0, padding: 4, borderRadius: 6, backgroundColor: "#007ACC" }}>
                   <Text style={{ color: "white", fontSize: isMobile ? 9 : 12 }}>Más demandado</Text>
