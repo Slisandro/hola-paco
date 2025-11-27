@@ -1,7 +1,10 @@
 import { Tabs } from "expo-router";
 import { Image, Text } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+
   const icons = {
     index: {
       default: require("@/assets/icons/home.png"),
@@ -28,19 +31,16 @@ export default function TabLayout() {
         tabBarStyle: {
           elevation: 0,
           shadowColor: "transparent",
-          height: 60,
-          paddingBottom: 0,
+          height: 60 + insets.bottom, 
+          paddingBottom: insets.bottom,
           position: "absolute",
           borderTopWidth: 1.5,
-          borderColor: "#00000025"
+          borderColor: "#00000025",
         },
         tabBarItemStyle: {
           height: 60,
           justifyContent: "center",
           alignItems: "center",
-        },
-        tabBarLabelStyle: {
-          // marginTop: 4,
         },
       }}
     >

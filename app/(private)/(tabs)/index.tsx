@@ -1,3 +1,5 @@
+import BannerDiagonal from '@/components/app/Banner';
+import BannerDiagonal2 from '@/components/app/BannerReverse';
 import { useAccount } from '@/contexts/AccountContext';
 import { EvilIcons } from '@expo/vector-icons';
 import { Image, ImageBackground } from 'expo-image';
@@ -336,7 +338,7 @@ export default function HomeScreen() {
               >
                 <Image
                   source={item.item.icono}
-                  style={[stylesServicios.icono, { height: 120, width: 180, borderRadius: 15 }]}
+                  style={[stylesServicios.icono, { height: 180, width: 180, borderRadius: 15 }]}
                   contentFit="cover"
                 />
 
@@ -374,7 +376,7 @@ export default function HomeScreen() {
               >
                 <Image
                   source={item.item.icono}
-                  style={[stylesServicios.icono, { height: 120, width: 180, borderRadius: 15 }]}
+                  style={[stylesServicios.icono, { height: 180, width: 180, borderRadius: 15 }]}
                   contentFit="cover"
                 />
 
@@ -768,7 +770,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   container: {
-    flex: 1,
     backgroundColor: "transparent",
     marginBottom: 50
   },
@@ -793,121 +794,6 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
 });
-
-function BannerDiagonal() {
-  const router = useRouter();
-  return (
-    <View style={stylesBanner.container}>
-      <View style={stylesBanner.content}>
-        <Image
-          source={require("@/assets/images/saludo.png")}
-          style={[stylesBanner.image, {
-            position: "absolute",
-            right: -20,
-            bottom: -20
-          }]} contentFit="contain" />
-        <View style={stylesBanner.textContainer}>
-          <Text style={[stylesBanner.title, { color: "#0073B6", fontSize: 22 }]}>
-            Servicio personalizado
-          </Text>
-          <Text style={stylesBanner.subtitle}>
-            ¿No encuentras lo que necesitas?
-            Pidenos un servicio a medida
-          </Text>
-
-          <Pressable style={stylesBanner.button} onPress={() => router.push("/(private)/(services)/professional")}>
-            <Text style={stylesBanner.buttonText}>CONTRATAR AHORA</Text>
-          </Pressable>
-        </View>
-      </View>
-    </View>
-  );
-}
-
-const stylesBanner = StyleSheet.create({
-  container: {
-    height: 160,
-    overflow: "hidden",
-    position: "relative",
-    backgroundColor: "#FF9E5E",
-    marginHorizontal: 20,
-    borderRadius: 15,
-    marginBottom: 30
-  },
-  orangeBg: {
-  },
-  content: {
-    paddingRight: "10%",
-    position: "relative",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: "100%",
-    paddingHorizontal: 20,
-  },
-  image: {
-    width: 150,
-    height: 150,
-  },
-  textContainer: {
-    flex: 1,
-    marginRight: 50,
-  },
-  title: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 14,
-    lineHeight: 24,
-  },
-  subtitle: {
-    color: "black",
-    fontWeight: "bold",
-    fontSize: 14,
-    marginVertical: 6
-  },
-  button: {
-    backgroundColor: "#0073B6",
-    marginTop: 10,
-    alignSelf: "flex-start",
-    paddingHorizontal: 14,
-    paddingVertical: 14,
-    borderRadius: 6,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 12,
-  },
-});
-
-function BannerDiagonal2() {
-  const router = useRouter();
-  return (
-    <View style={stylesBanner.container}>
-      <View style={stylesBanner.content}>
-        <Image
-          source={require("@/assets/images/llamada.png")}
-          style={[stylesBanner.image, {
-            position: "absolute",
-            right: -20,
-            bottom: -20
-          }]} contentFit="contain" />
-        <View style={stylesBanner.textContainer}>
-          <Text style={[stylesBanner.title, { color: "#0073B6", fontSize: 22 }]}>
-            Soporte al cliente
-          </Text>
-          <Text style={stylesBanner.subtitle}>
-            De respuestas rápidas a ayuda detallada, obtén el soporte que necesitas
-          </Text>
-
-          <Pressable style={stylesBanner.button}>
-            <Text style={stylesBanner.buttonText} onPress={() => router.push("/(private)/(services)/listaServicios")}>CONTACTAR AHORA</Text>
-          </Pressable>
-        </View>
-      </View>
-    </View>
-  );
-}
 
 const servicios = [
   {
