@@ -2,7 +2,7 @@ import BannerDiagonal from '@/components/app/Banner';
 import BannerDiagonal2 from '@/components/app/BannerReverse';
 import { useAccount } from '@/contexts/AccountContext';
 import { EvilIcons } from '@expo/vector-icons';
-import { Image, ImageBackground } from 'expo-image';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
@@ -229,12 +229,6 @@ export default function HomeScreen() {
       <StatusBar style="dark" />
       <ScrollView style={styles.container}>
         <View style={styles.firstSection}>
-          <ImageBackground
-            source={require("@/assets/images/hero-background.png")}
-            style={StyleSheet.absoluteFillObject}
-            contentFit="cover"
-          />
-
           <View
             style={{
               flex: 1,
@@ -244,16 +238,54 @@ export default function HomeScreen() {
               position: "relative"
             }}
           >
-            <View style={{ width: "100%", backgroundColor: "white", borderRadius: 20, position: "relative" }}>
-              <TextInput placeholderTextColor={"#00000066"} placeholder='¿Cómo podemos ayudarte?' style={{ width: "100%", paddingVertical: 15, paddingHorizontal: 20 }} />
+            <View style={{ flexDirection: "row", alignItems: "center", marginHorizontal: 10 }}>
+              <View style={{ width: "50%", paddingVertical: 40 }}>
+                <Text style={{ fontSize: 34, lineHeight: 32, fontWeight: 800, color: "white" }}>
+                  HOLA
+                </Text>
+                <Text style={{ fontSize: 34, lineHeight: 32, fontWeight: 800, color: "white" }}>
+                  PACO
+                </Text>
+                <Text style={{ fontSize: 24, fontWeight: 600, color: "white" }}>
+                  Tu ayudante de confianza
+                </Text>
 
-              <Pressable onPress={() => router.push("/(private)/(services)/professional")} style={{ position: "absolute", right: 20, height: "100%", }}>
-                <EvilIcons name='search' color={"#00000066"} size={28} style={{ alignItems: "center", justifyContent: "center", marginVertical: "auto" }} />
-              </Pressable>
+              </View>
+
+              <View
+                style={{
+                  position: "absolute",
+                  right: -20,
+                  width: 190,
+                  height: 210,
+                  bottom: -20,
+                  zIndex: 10
+                }}
+              >
+                <Image
+                  source={require("@/assets/images/saludo-2.png")}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  contentFit="contain"
+                />
+              </View>
             </View>
+          </View>
+        </View>
+        <View style={[styles.firstSection, { backgroundColor: "white" }]}>
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: 20,
+              paddingTop: 20,
+              position: "relative"
+            }}
+          >
+
             <View
               style={{
-                marginTop: 20,
                 flexDirection: "row",
                 alignItems: "center",
                 justifyContent: "flex-start",
@@ -273,43 +305,36 @@ export default function HomeScreen() {
                 style={{
                   fontSize: 20,
                   fontWeight: 800,
-                  color: "white",
                   width: "80%",
                 }}
               >
-                Hola Jose 👋
+                Hola Jose
               </Text>
 
+
             </View>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 600,
+                marginTop: 12,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-start",
+              }}
+            >
+              👋 ¿En qué podemos ayudarte hoy?
+            </Text>
+            <View style={{
+              marginTop: 20,
+              width: "100%", backgroundColor: "#d3d3d366", borderRadius: 20, position: "relative"
+              
+            }}>
+              <Pressable onPress={() => router.push("/(private)/(services)/professional")} style={{ position: "absolute", left: 10, height: "100%" }}>
+                <EvilIcons name='search' color={"#00000066"} size={24} style={{ alignItems: "center", justifyContent: "center", marginVertical: "auto" }} />
+              </Pressable>
+              <TextInput placeholderTextColor={"#00000066"} placeholder='Buscar un servicio...' style={{ width: "100%", paddingVertical: 15, paddingHorizontal: 20, paddingLeft: 40 }} />
 
-            <View style={{ flexDirection: "row", alignItems: "center", }}>
-              <View style={{ width: "50%", height: 100, gap: 10, marginVertical: 40 }}>
-                <Text style={{ fontSize: 28, fontWeight: 800, color: "white" }}>
-                  ¡HASTA +20%
-                  EN LIMPIEZA HOY!
-                </Text>
-
-              </View>
-
-              <View
-                style={{
-                  position: "absolute",
-                  right: -20,
-                  width: 190,
-                  height: 210,
-                  bottom: -20,
-                  zIndex: 10
-                }}
-              >
-                <Image
-                  source={require("@/assets/images/saludo.png")}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                  }}
-                  contentFit="contain"
-                />
-              </View>
             </View>
           </View>
         </View>
