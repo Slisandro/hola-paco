@@ -45,13 +45,13 @@ export default function BannerDiagonal() {
             </View>
 
             <Image
-                source={require("@/assets/images/saludo.png")}
+                source={require("@/assets/images/paco-home.png")}
                 style={[
                     styles.image,
                     {
                         position: "absolute",
-                        right: "-2.5%",
-                        bottom: "-4%",
+                        right: "-4%",
+                        bottom: 0,
                         marginLeft: "auto",
                         height: "100%",
                     },
